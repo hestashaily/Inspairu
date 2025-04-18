@@ -1,9 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
 @theme inline {
   --color-background: var(--background);
@@ -19,8 +15,44 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #4a90e2;
 }
+
+.dark {
+  --bg-color: #684056;
+  --text-color: #ffffff;
+  --primary-color: #bb86fc;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+.btn-gradient{
+  background: linear-gradient(180deg, #973998 0%, #DB5689 100%);
+
+}
+.slick-dots{
+  bottom: 15px !important;
+}
+.header-bg{
+  background: linear-gradient(50.76deg, #B74691 24.76%, #F5B545 107.75%);
+}
+
+@media (max-width: 640px) {
+  .otp-input {
+    width: 60px !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .otp-input {
+    width: 102px !important;
+  }
+}
+
+
