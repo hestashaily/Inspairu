@@ -87,7 +87,7 @@ export default function Header() {
             <div className="bg-[#EC5252] rounded-full w-[6px] h-[6px] absolute right-[12px] top-[12px]" />
           </div>
           {showNotificationDropdown && (
-            <div className="absolute right-0 mt-2 w-[365px] bg-white rounded-md shadow-lg py-4 z-10">
+            <div className="absolute right-0 mt-2 w-[365px] bg-white rounded-md shadow-lg pt-4 z-10">
               <div className="flex items-center justify-between px-[16px]">
                 <p className="font-[400] text-[16px]  text-[#1A1918]">
                   Notifications
@@ -142,7 +142,7 @@ export default function Header() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-[16px] mt-[16px] p-[16px] border-t border-t-[#DBDBDB]  hover:bg-[#F9DFE9A3]">
+              <div className="flex items-start gap-[16px] p-[16px] border-t border-t-[#DBDBDB]  hover:bg-[#F9DFE9A3]">
                 <Image
                   src="/auth-images/notifyOne.png"
                   width={36}
@@ -192,28 +192,28 @@ export default function Header() {
             />
           </div>
           {showProfileDropdown && (
-            <div className="absolute right-0 mt-2 w-[190px] bg-white rounded-md shadow-lg p-4 z-10">
-              <p className="text-[14px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer ">
+            <div className="absolute right-0 mt-2 w-[200px] bg-white rounded-md shadow-lg p-4 z-10">
+              <p className="text-[14px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer p-[7px]  hover:bg-[#F9DFE9A3]">
                 <Profile />
                 Profile
               </p>
-              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
+              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer p-[7px]    hover:bg-[#F9DFE9A3]">
                 <Setting />
                 Settings
               </p>
-              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
+              <p className="text-[14px] p-[7px]  hover:bg-[#F9DFE9A3] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
                 <TermsCondition />
                 Terms & Conditions
               </p>
-              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
+              <p className="text-[14px] p-[7px]  hover:bg-[#F9DFE9A3] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
                 <Privacypolicy />
                 Privacy Policy
               </p>
-              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
+              <p className="text-[14px] p-[7px]  hover:bg-[#F9DFE9A3] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer">
                 <Help />
                 Help
               </p>
-              <p className="text-[14px] mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer ">
+              <p className="text-[14px]  p-[7px]  hover:bg-[#F9DFE9A3]  mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer ">
                 <Logout />
                 Logout
               </p>

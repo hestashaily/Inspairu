@@ -54,5 +54,17 @@ body {
     width: 102px !important;
   }
 }
+.container{
+  max-width: 1144px;
+  width: 100%;
+  margin: auto;
+}
+
+.custom-slider{
+  accent-color: #CD508C;
+
+}
+
+
 
 

@@ -1,12 +1,10 @@
 import Carousel from "@/app/components/Carousel";
-import Header from "@/app/components/Header";
 import Image from "next/image";
 import Link from "next/link";
 const Page: React.FC = () => {
   return (
     <main>
-      <Header/>
-      {/* <div className="px-[20px] py-[40px] flex items-start justify-center gap-[66px] lg:flex-row flex-col">
+      <div className="px-[20px] py-[40px] flex items-start justify-center gap-[66px] lg:flex-row flex-col">
         <Carousel />
         <div className="lg:max-w-[490px] max-w-full w-full">
           <h1 className="font-[600] text-[28px] text-[#525252]">Sign In</h1>
@@ -73,7 +71,7 @@ const Page: React.FC = () => {
                      </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </main>
   );
 };
