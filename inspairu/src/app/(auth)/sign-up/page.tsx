@@ -1,68 +1,126 @@
+"use client";
+import React, { useState } from "react";
 import Carousel from "@/app/components/Carousel";
-import Image from "next/image";
-const Page: React.FC = () => {
-  return (
-    <main>
-      <div className="px-[20px] py-[40px] flex items-start justify-center gap-[66px] lg:flex-row flex-col">
-        <Carousel  />
-        <div className="lg:max-w-[490px] max-w-full w-full">
-          <h1 className="font-[600] text-[28px] text-[#525252] text-center mb-[38px]">
-            Join AI Hub
-          </h1>
-          <form action="">
-            <div className="flex items-center gap-[40px] ">
-              <input
-                type="text"
-                placeholder="First Name"
-             className="border-b-[2px] border-[#E8E8E8] lg:max-w-[239px] max-w-[50%] w-full pb-[9px] font-[500] text-[14px] text-[#A1A1A1] outline-none"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="border-b-[2px] border-[#E8E8E8] lg:max-w-[239px] max-w-[50%] w-full pb-[9px] font-[500] text-[14px] text-[#A1A1A1] outline-none"
-              />
-            </div>
-            <div className="flex items-center gap-[40px] mt-[40px]">
-              <input
-                type="text"
-                placeholder="Username"
-                className="border-b-[2px] border-[#E8E8E8] lg:max-w-[239px] max-w-[50%] w-full pb-[9px] font-[500] text-[14px] text-[#A1A1A1] outline-none"
-              />
-              <input
-                type="email"
-                placeholder="E-mail ID"
-                className="border-b-[2px] border-[#E8E8E8] lg:max-w-[239px] max-w-[50%] w-full pb-[9px] font-[500] text-[14px] text-[#A1A1A1] outline-none"
-              />
-            </div>
-            <button className="btn-gradient mt-[118px] max-w-full w-full py-[8px] rounded-[6px] font-[600] text-[16px] text-white cursor-pointer">
-            Create Account
-            </button>
-            <p className="font-[400] text-[16px] text-[#525252] mt-[25px] text-center">Already have an account? <span className="font-[600] cursor-pointer bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">Login</span></p>
-          </form>
-          <p className="mt-[37px] text-center font-[500] text-[14px] text-[#A1A1A1]">- OR - </p>
-         <div className="flex items-center justify-center gap-[14px] mt-[39px]">
-          <button className="max-w-[163px] w-full border border-[#E8E8E8] py-[8px] rounded-[6px] flex items-center justify-center cursor-pointer">
-          <Image
-              src="/auth-images/google.png"
-              width={34}
-              height={25}
-              alt="google"
-            />
-          </button>
-          <button className="max-w-[163px] w-full border border-[#E8E8E8] py-[8px] rounded-[6px] flex items-center justify-center cursor-pointer">
-          <Image
-              src="/auth-images/apple.png"
-              width={24}
-              height={22}
-              alt="apple"
-              className="h-[29px]"
-            />
-          </button>
-         </div>
-         <p className="mt-[26px] text-[12px] text-[#525252] font-[300] text-center">By continuing, you agree to the  INSPAIRU <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">User Account Agreement  </span> and <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent"> Privacy Policy</span></p>
+import SignUpform from "@/app/components/SignUpform";
+import OtpVerification from "@/app/components/OtpVerification";
+import SetPassword from "@/app/components/SetPassword";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { settingsProps } from "../../../../types/global";
 
-        </div>
+const Page: React.FC = () => {
+  const route = useRouter();
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    userEmail: "",
+    otp: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const updateFormData = (newData: Partial<typeof formData>) => {
+    setFormData((prev) => ({ ...prev, ...newData }));
+  };
+  const settings = {
+    theme: "light",
+    position: "top-center",
+    duration: 5000,
+    style: {
+      background: "#fff",
+      color: "#000",
+      fontSize: "16px",
+      padding: "16px",
+      borderRadius: "8px",
+    },
+  };
+  const saveSettings = async (settings: settingsProps) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("Settings saved:", settings);
+        resolve(true);
+      }, 2000);
+    });
+  };
+  const handleFinalSubmit = async (finalFormData: typeof formData) => {
+    console.log("Final form data:of sign up", finalFormData);
+    if (
+      !finalFormData.firstName ||
+      !finalFormData.lastName ||
+      !finalFormData.userName ||
+      !finalFormData.userEmail ||
+      !finalFormData.password
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    //api call
+    const response = await fetch("/api/sign-up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalFormData),
+    });
+
+    if (response.ok) {
+      console.log("User signed up successfully");
+      // toast.success("User signed up successfully");
+      toast.promise(saveSettings(settings), {
+        loading: "Saving...",
+        success: <b>User Signed Up Sucessfully</b>,
+        error: <b>Could not save.</b>,
+      });
+      route.push("/login");
+    } else {
+      console.error("Error signing up");
+      toast.error("Error signing up");
+    }
+
+    console.log("this is the final data submitted to backend: ", finalFormData);
+  };
+
+  return (
+    <main className="px-[40px]">
+      <div className="px-[20px] py-[40px] flex items-center justify-center gap-[66px] lg:flex-row flex-col">
+        <Carousel />
+        {step === 1 && (
+          <SignUpform
+            onNextStep={() => setStep(2)}
+            updateFormData={updateFormData}
+            formData={formData}
+          />
+        )}
+        {step === 2 && (
+          <OtpVerification
+            onNextStep={() => setStep(3)}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        )}
+        {step === 3 && (
+          <SetPassword
+            heading={"Set a strong password"}
+            subHeading={"Create a strong password to keep your account secure."}
+            formData={formData}
+            updateFormData={updateFormData}
+            onFinalSubmit={handleFinalSubmit}
+            buttonDesc={"Create Account"}
+          />
+        )}
       </div>
+      <p className="text-[12px] text-[#525252] font-[300] lg:text-end text-center lg:mr-[60px] mr-[0px] lg:mt-[0px] mt-[10px]">
+        By continuing, you agree to the INSPAIRU
+        <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">
+          User Account Agreement
+        </span>
+        and
+        <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">
+          Privacy Policy
+        </span>
+      </p>
     </main>
   );
 };

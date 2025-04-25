@@ -1,41 +1,91 @@
+"use client";
 import Carousel from "@/app/components/Carousel";
-import Link from "next/link";
+import ForgotPassword from "@/app/components/ForgotPassword";
+import OtpVerification from "@/app/components/OtpVerification";
+import SetPassword from "@/app/components/SetPassword";
+import { useState } from "react";
+import toast from "react-hot-toast";
 const Page: React.FC = () => {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    userEmail: "",
+    otp: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    userName: "",
+    confirmPassword: "",
+  });
+  const updateFormData = (newData: Partial<typeof formData>) => {
+    setFormData((prev) => ({ ...prev, ...newData }));
+  };
+
+  const onFinalSubmit = async () => {
+    try {
+      console.log("Final form data:", formData);
+      const response = await fetch("/api/update-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.userEmail,
+          password: formData.password,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        if (data.error === "Missing email or name") {
+          toast.error("Please enter both email and name.");
+        } else if (data.error === "Failed to save OTP") {
+          toast.error("Could not save OTP. Please try again later.");
+        } else {
+          toast.error(data.error || "Something went wrong");
+        }
+      }
+      if (response.ok) {
+        toast.success("Password updated successfully");
+        // setTimeout(() => {
+        //   window.location.href = "/login";
+        // }, 2000);
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      toast.error("An error occurred while updating password");
+    }
+  };
   return (
     <main className="px-[40px]">
       <div className=" pt-[40px] flex items-center justify-center gap-[66px] lg:flex-row flex-col">
-        <Carousel  />
-        <div className="md:max-w-[490px] max-w-full w-full">
-          <h2 className="font-[600] text-[24px] text-[#525252]">
-          Forgot Password
-          </h2>
-          <p className="mt-[8px] font-[400] text-[16px] text-[#525252]">
-          Enter your email address and we’ll OTP to reset password
-          </p>
-          <form action="">
-          <div className="border-b-[2px] border-b-[#E8E8E8] pb-[8px] flex items-center justify-between pt-[28px]">
-            <input
-              type="email"
-              placeholder="Email"
-              className="font-[500] text-[14px] text-[#A1A1A1] outline-none w-full"
-            />
-        
-          </div>
-      
-          <button className="btn-gradient max-w-full py-[8px] w-full rounded-[6px] font-[600] text-[16px] text-white mt-[32px] cursor-pointer">
-          Submit
-          </button>
-          </form>
-       <p className="font-[400] mt-[30px] text-[16px] text-[#344054]">Go to {" "}
-        <Link href="/login">
-        <span className="bg-gradient-to-b font-[600] cursor-pointer
-         from-[#973998] to-[#DB5689] bg-clip-text text-transparent">Sign In</span>
-         </Link>
-        </p>
-       
-        </div>
+        <Carousel />
+
+        {step === 1 && (
+          <ForgotPassword
+            onNextStep={() => setStep(2)}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        )}
+        {step === 2 && (
+          <OtpVerification
+            onNextStep={() => setStep(3)}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        )}
+        {step === 3 && (
+          <SetPassword
+            heading={"Reset Password"}
+            subHeading={
+              "Your previous password has been reseted. Please set a new password for your account"
+            }
+            formData={formData}
+            updateFormData={updateFormData}
+            onFinalSubmit={onFinalSubmit}
+            buttonDesc={"Reset Password"}
+          />
+        )}
       </div>
-     
     </main>
   );
 };
