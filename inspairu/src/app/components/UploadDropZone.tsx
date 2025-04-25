@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { Upload } from "../icon";
 import Image from "next/image";
+import CustomMultiSelect from "./CustomMultiSelect";
 
 type MediaPreview = {
   id: string;
@@ -11,6 +12,13 @@ type MediaPreview = {
 };
 
 export default function UploadDropZone() {
+
+  const [aiTools, setAiTools] = useState<string[]>([]);
+
+  const aiOptions = [
+    'ChatGPT', 'Bard', 'GitHub Copilot', 'Midjourney', 'DALL·E', 'Claude', 'Gemini',
+  ];
+  
   const [previews, setPreviews] = useState<MediaPreview[]>([]);
 
   const handleFiles = (files: FileList | null) => {
@@ -97,7 +105,6 @@ export default function UploadDropZone() {
         />
       </div>
       <div className="flex items-start flex-col max-w-[530px] w-full">
-        {/* preview  */}
         <div className="flex flex-wrap gap-4 max-w-[600px] mb-4">
           {previews.map((media) => (
             <div
@@ -177,20 +184,14 @@ export default function UploadDropZone() {
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
           </div>
-          <div className="flex flex-col gap-[10px] w-full mt-[15px]  max-w-full">
-            <label
-              htmlFor="AI Tool Used"
-              className="font-semibold block text-[16px] text-[#525252]"
-            >
-              Hashtags
-            </label>
-            <input
-              type="text"
-              name="Hashtags"
-              placeholder="Write hashtags"
-              className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
-            />
-          </div>
+        <div className="mt-[15px]">
+               <CustomMultiSelect
+                  label="Hashtags"
+                  options={aiOptions}
+                  selectedOptions={aiTools}
+                  setSelectedOptions={setAiTools}
+                />
+                </div>
           <div className="flex items-start flex-col gap-[22px] mt-[15px]">
             <label
               htmlFor="description"
@@ -206,6 +207,11 @@ export default function UploadDropZone() {
           </div>
         </div>
       </div>
+      <div className="flex items-end justify-end w-full">
+      <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer  text-white">
+          Post
+        </button>
+        </div>
     </div>
   );
 }

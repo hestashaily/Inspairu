@@ -41,9 +41,7 @@ export default function UploadContent() {
           </button>
         </div>
      
-        <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer text-white">
-          Post
-        </button>
+      
       </div>
       <div className="">
         {activeTab === "tab1" && <div>

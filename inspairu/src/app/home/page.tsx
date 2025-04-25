@@ -1,19 +1,22 @@
 "use client";
 
 import Header from "../components/Header";
-import PostCard from "../components/PostCard";
+import Feed from "../components/homecomponent/Feed";
+
+
 import TwoTabToggle from "../components/TwoTabToggle";
 
 
 const Page: React.FC = () => {
 
+  const name = "rajat"
 
   return (
     <main className="bg-[#F9F9F9]">
       <Header />
       <div className="container">
         <TwoTabToggle />
-         <PostCard/>
+        <Feed/>
       </div>
     </main>
   );

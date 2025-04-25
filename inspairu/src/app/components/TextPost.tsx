@@ -1,7 +1,15 @@
 "use client";
+import { useState } from 'react';
+import CustomMultiSelect from "./CustomMultiSelect";
 
 
 export default function TextPost() {
+  const [aiTools, setAiTools] = useState<string[]>([]);
+
+  const aiOptions = [
+    'ChatGPT', 'Bard', 'GitHub Copilot', 'Midjourney', 'DALL·E', 'Claude', 'Gemini',
+  ];
+  
   return (
     <div className="w-full max-w-full mt-[24px]">
       <div className="flex items-center w-full gap-[22px]">
@@ -19,20 +27,15 @@ export default function TextPost() {
             className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
           />
         </div>
-        <div className="flex flex-col gap-[10px] w-[50%]">
-          <label
-            htmlFor="aitool"
-            className="font-[600] text-[18px] text-[#525252]"
-          >
-            AI Tool Used*
-          </label>
-          <input
-            type="text"
-            name="aitool"
-            placeholder="Write AI tool used"
-            className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
-          />
-        </div>
+<div className='w-[50%]'>
+           <CustomMultiSelect
+        label="AI Tools Used"
+        options={aiOptions}
+        selectedOptions={aiTools}
+        setSelectedOptions={setAiTools}
+      />
+      </div>
+        
       </div>
       <div className="flex items-center w-full gap-[22px] mt-[15px]">
         <div className="flex flex-col gap-[10px] w-[50%]">
@@ -89,6 +92,11 @@ export default function TextPost() {
           className="noresize border border-[#CBD5E1] rounded-[14px] w-full min-h-[252px] h-full resize-none outline-none p-[8px] font-[500] text-[14px] text-[#8D8D8D]"
         ></textarea>
       </div>
+      <div className="flex items-end justify-end w-full mt-[15px]">
+      <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer  text-white">
+          Post
+        </button>
+        </div>
     </div>
   );
 }
