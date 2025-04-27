@@ -8,18 +8,26 @@ datasource db {
 }
 
 model users {
-  id         Int       @id @default(autoincrement())
-  uuhid      String    @unique @db.Char(36)
-  first_name String    @db.VarChar(100)
-  last_name  String    @db.VarChar(100)
-  username   String    @unique @db.VarChar(100)
-  email      String    @unique @db.VarChar(255)
-  password   String    @db.VarChar(255)
-  auth_key   String?   @db.VarChar(255)
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  user_id           BigInt        @id @default(autoincrement())
+  user_uuid         String        @unique(map: "user_uuid") @db.VarChar(36)
+  first_name        String        @db.VarChar(100)
+  last_name         String        @db.VarChar(100)
+  username          String        @unique @db.VarChar(100)
+  email             String        @unique @db.VarChar(255)
+  bio               String?       @db.Text
+  country_code      String?       @db.VarChar(5)
+  phone_number      String?       @db.VarChar(12)
+  dob               DateTime?     @db.Date
+  gender            users_gender?
+  password          String        @db.VarChar(255)
+  auth_key          String?       @db.VarChar(255)
+  is_blocked        Boolean?      @default(false)
+  is_deleted        Boolean?      @default(false)
+  is_verified       Boolean?      @default(false)
+  created_datetime  DateTime?     @default(now()) @db.DateTime(0)
+  updated_datetime  DateTime?     @default(now()) @db.DateTime(0)
 
-  accounts   Account[]
+  account           account[]
 }
 
 
@@ -28,21 +36,168 @@ model email_otp_verification {
   OTP      String @db.VarChar(6)
 }
 
-model Account {
-  id                Int       @id @default(autoincrement())
-  userId            Int
+model account {
+  id                Int     @id @default(autoincrement())
+  userId            BigInt
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?   @db.Text
-  access_token      String?   @db.Text
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?   @db.Text
+  id_token          String? @db.Text
   session_state     String?
-  user              users     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  users users @relation(fields: [userId], references: [user_id], onDelete: Cascade, map: "Account_userId_fkey")
 
-  @@unique([provider, providerAccountId])
+
+  @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
+  @@index([userId], map: "Account_userId_fkey")
 }
 
+model ai_tool_mstr {
+  id               Int            @id @default(autoincrement())
+  name             String         @unique(map: "name") @db.VarChar(100)
+  is_active        Boolean?
+  created_datetime DateTime?      @default(now()) @db.DateTime(0)
+  updated_datetime DateTime?      @default(now()) @db.DateTime(0)
+  feed_ai_tool     feed_ai_tool[]
+}
+
+model blocked_comments {
+  comment_id BigInt
+  user_id    BigInt
+
+  @@id([comment_id, user_id])
+}
+
+model comment_reaction {
+  comment_id       BigInt
+  reacted_by       BigInt
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+
+  @@id([comment_id, reacted_by])
+}
+
+model comment_reply {
+  reply_id         BigInt    @id @default(autoincrement())
+  comment_id       BigInt?
+  reply_by         BigInt?
+  reply            String?   @db.VarChar(255)
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+  updated_datetime DateTime? @default(now()) @db.DateTime(0)
+  total_reaction   Int?      @default(0)
+}
+
+model comment_reply_reaction {
+  reply_id         BigInt
+  reacted_by       BigInt
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+
+  @@id([reply_id, reacted_by])
+}
+
+model comments {
+  comment_id       BigInt    @id @default(autoincrement())
+  feed_id          BigInt?
+  comment_by       BigInt?
+  comment          String?   @db.Text
+  total_reaction   Int?      @default(0)
+  total_reply      Int?      @default(0)
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+  updated_datetime DateTime? @default(now()) @db.DateTime(0)
+}
+
+model feed_ai_tool {
+  feed_id      BigInt
+  ai_tool_id   Int
+  ai_tool_mstr ai_tool_mstr @relation(fields: [ai_tool_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ai_tool")
+  feeds        feeds        @relation(fields: [feed_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_feed_ai_tool")
+
+  @@id([feed_id, ai_tool_id])
+  @@index([ai_tool_id], map: "fk_ai_tool")
+}
+
+model feed_hashtag {
+  feed_id BigInt
+  hashtag String @db.VarChar(100)
+  feeds   feeds  @relation(fields: [feed_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_feed_hashtag")
+
+  @@id([feed_id, hashtag])
+}
+
+model feed_media {
+  id            BigInt                 @id
+  feed_id       BigInt
+  thumbnail_url String                 @db.VarChar(255)
+  media_url     String                 @db.VarChar(255)
+  media_type    feed_media_media_type? @default(image)
+  created_at    DateTime?              @default(now()) @db.Timestamp(0)
+  feeds         feeds                  @relation(fields: [feed_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_feed_media")
+
+  @@index([feed_id], map: "fk_feed_media")
+}
+
+model feeds {
+  id                   BigInt           @id @default(autoincrement())
+  feed_uuid            String           @unique(map: "feed_uuid") @db.Char(36)
+  user_id              BigInt
+  caption              String?          @db.VarChar(255)
+  description          String?          @db.Text
+  prompt               String?          @db.Text
+  feed_type            feeds_feed_type? @default(text)
+  generated_text       String?          @db.Text
+  is_deleted           Boolean?         @default(false)
+  total_views_count    BigInt?          @default(0)
+  total_likes_count    BigInt?          @default(0)
+  total_comments_count BigInt?          @default(0)
+  created_at           DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at           DateTime?        @default(now()) @db.Timestamp(0)
+  feed_ai_tool         feed_ai_tool[]
+  feed_hashtag         feed_hashtag[]
+  feed_media           feed_media[]
+}
+
+model reactions {
+  feed_id          BigInt
+  reacted_by       BigInt
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+
+  @@id([feed_id, reacted_by])
+}
+
+model report_feeds {
+  feed_id          BigInt
+  blocked_by       BigInt
+  message          String?   @db.VarChar(256)
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+  updated_datetime DateTime? @default(now()) @db.DateTime(0)
+
+  @@id([feed_id, blocked_by])
+}
+
+model views {
+  feed_id          BigInt
+  viewed_by        BigInt
+  created_datetime DateTime? @default(now()) @db.DateTime(0)
+
+  @@id([viewed_by, feed_id])
+}
+
+enum feed_media_media_type {
+  image
+  video
+  music
+}
+
+enum feeds_feed_type {
+  text
+  media
+}
+
+enum users_gender {
+  M
+  F
+  O
+}

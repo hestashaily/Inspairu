@@ -21,7 +21,7 @@ export const authOptions = {
       },
       authorize: async (credentials) => {
         const user = await prisma.users.findUnique({
-          where: { email: credentials?.email },
+          where: { email: credentials?.email || undefined },
         });
 
         if (!user) throw new Error("No user found");
@@ -35,7 +35,7 @@ export const authOptions = {
 
         return {
           ...user,
-          id: user.id.toString(),
+          id: user.user_id.toString(),
         };
       },
     }),
@@ -45,25 +45,25 @@ export const authOptions = {
     async jwt({ token, user, account }) {
       if (user && account?.provider !== "credentials") {
         const existingUser = await prisma.users.findUnique({
-          where: { email: user.email },
-          include: { accounts: true },
+          where: { email: user.email || undefined },
+          include: { account: true },
         });
 
         if (!existingUser) {
           const fullName = user.name || "";
           const [firstName = "", lastName = ""] = fullName.split(" ");
-          const username = user.email?.split("@")[0];
+          const username = user.email?.split("@")[0] || "";
 
           const newUser = await prisma.users.create({
             data: {
-              uuhid: uuidv4(),
+              user_uuid: uuidv4(),
               email: user.email!,
               first_name: firstName,
               last_name: lastName,
               username,
               password: "",
               auth_key: account.provider,
-              accounts: {
+              account: {
                 create: {
                   type: account.type!,
                   provider: account.provider,
@@ -73,23 +73,25 @@ export const authOptions = {
                   expires_at: account.expires_at,
                   token_type: account.token_type,
                   id_token: account.id_token,
+                  session_state: account.session_state,
                 },
               },
             },
           });
 
+          token.user_id = newUser.user_id.toString(); // Convert BigInt to string
           token.email = newUser.email;
-          token.uuhid = newUser.uuhid;
+          token.user_uuid = newUser.user_uuid;
           token.userName = newUser.username;
         } else {
-          const existingAccount = existingUser.accounts.find(
+          const existingAccount = existingUser.account.find(
             (acc) => acc.provider === account.provider
           );
 
           if (!existingAccount) {
             await prisma.account.create({
               data: {
-                userId: existingUser.id,
+                userId: existingUser.user_id,
                 type: account.type!,
                 provider: account.provider,
                 providerAccountId: account.providerAccountId,
@@ -98,19 +100,22 @@ export const authOptions = {
                 expires_at: account.expires_at,
                 token_type: account.token_type,
                 id_token: account.id_token,
+                session_state: account.session_state,
               },
             });
           }
 
+          token.user_id = existingUser.user_id.toString(); // Convert BigInt to string
           token.email = existingUser.email;
-          token.uuhid = existingUser.uuhid;
+          token.user_uuid = existingUser.user_uuid;
           token.userName = existingUser.username;
         }
       }
 
       if (user && account?.provider === "credentials") {
         token.email = user.email;
-        token.uuhid = user.uuhid;
+        token.user_id = user.user_id.toString(); // Convert BigInt to string
+        token.user_uuid = user.user_uuid;
         token.userName = user.username;
       }
 
@@ -119,13 +124,21 @@ export const authOptions = {
 
     async session({ session, token }) {
       if (token) {
+        // Make sure we're using the correct structure for the session
+        if (!session.user) {
+          session.user = {};
+        }
+
         session.user.email = token.email;
-        session.user.uuhid = token.uuhid;
+        session.user.id = token.user_id; // Set as user.id for standard NextAuth format
+        session.user.user_id = token.user_id; // Also set as user.user_id
+        session.user.user_uuid = token.user_uuid;
         session.user.userName = token.userName;
       }
       return session;
     },
   },
+
   session: {
     strategy: "jwt",
   },
