@@ -165,3 +165,14 @@ export async function getSearchedFeeds(input: GetSearchedFeedsInput) {
     handleError(error);
   }
 }
+
+export async function fetchAiTools() {
+  try {
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    return await feedService.fetchAiTools();
+  } catch (error) {
+    handleError(error);
+  }
+}

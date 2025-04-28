@@ -8,28 +8,27 @@ datasource db {
 }
 
 model users {
-  user_id           BigInt        @id @default(autoincrement())
-  user_uuid         String        @unique(map: "user_uuid") @db.VarChar(36)
-  first_name        String        @db.VarChar(100)
-  last_name         String        @db.VarChar(100)
-  username          String        @unique @db.VarChar(100)
-  email             String        @unique @db.VarChar(255)
-  bio               String?       @db.Text
-  country_code      String?       @db.VarChar(5)
-  phone_number      String?       @db.VarChar(12)
-  dob               DateTime?     @db.Date
-  gender            users_gender?
-  password          String        @db.VarChar(255)
-  auth_key          String?       @db.VarChar(255)
-  is_blocked        Boolean?      @default(false)
-  is_deleted        Boolean?      @default(false)
-  is_verified       Boolean?      @default(false)
-  created_datetime  DateTime?     @default(now()) @db.DateTime(0)
-  updated_datetime  DateTime?     @default(now()) @db.DateTime(0)
-
-  account           account[]
+  user_id          BigInt        @id @default(autoincrement())
+  user_uuid        String        @unique(map: "user_uuid") @db.VarChar(36)
+  first_name       String        @db.VarChar(100)
+  last_name        String        @db.VarChar(100)
+  username         String        @unique @db.VarChar(100)
+  email            String        @unique @db.VarChar(255)
+  bio              String?       @db.Text
+  country_code     String?       @db.VarChar(5)
+  phone_number     String?       @db.VarChar(12)
+  dob              DateTime?     @db.Date
+  gender           users_gender?
+  password         String        @db.VarChar(255)
+  auth_key         String?       @db.VarChar(255)
+  is_blocked       Boolean?      @default(false)
+  is_deleted       Boolean?      @default(false)
+  is_verified      Boolean?      @default(false)
+  created_datetime DateTime?     @default(now()) @db.DateTime(0)
+  updated_datetime DateTime?     @default(now()) @db.DateTime(0)
+  profile_pic      String?       @db.VarChar(255)
+  account          account[]
 }
-
 
 model email_otp_verification {
   email_id String @id @db.VarChar(80)
@@ -49,8 +48,7 @@ model account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  users users @relation(fields: [userId], references: [user_id], onDelete: Cascade, map: "Account_userId_fkey")
-
+  users             users   @relation(fields: [userId], references: [user_id], onDelete: Cascade, map: "Account_userId_fkey")
 
   @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
   @@index([userId], map: "Account_userId_fkey")
@@ -183,6 +181,13 @@ model views {
   created_datetime DateTime? @default(now()) @db.DateTime(0)
 
   @@id([viewed_by, feed_id])
+}
+
+model blocked_replies {
+  reply_id BigInt
+  user_id  BigInt
+
+  @@id([reply_id, user_id])
 }
 
 enum feed_media_media_type {
