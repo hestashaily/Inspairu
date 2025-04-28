@@ -1,44 +1,57 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE `users` (
+    `user_id` BIGINT NOT NULL AUTO_INCREMENT,
+    `user_uuid` VARCHAR(36) NOT NULL,
+    `first_name` VARCHAR(100) NOT NULL,
+    `last_name` VARCHAR(100) NOT NULL,
+    `username` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `bio` TEXT NULL,
+    `country_code` VARCHAR(5) NULL,
+    `phone_number` VARCHAR(12) NULL,
+    `dob` DATE NULL,
+    `gender` ENUM('M', 'F', 'O') NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `auth_key` VARCHAR(255) NULL,
+    `is_blocked` BOOLEAN NULL DEFAULT false,
+    `is_deleted` BOOLEAN NULL DEFAULT false,
+    `is_verified` BOOLEAN NULL DEFAULT false,
+    `created_datetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updated_datetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
 
-  - The primary key for the `users` table will be changed. If it partially fails, the table could be left without primary key constraint.
-  - You are about to drop the column `created_at` on the `users` table. All the data in the column will be lost.
-  - You are about to drop the column `id` on the `users` table. All the data in the column will be lost.
-  - You are about to drop the column `updated_at` on the `users` table. All the data in the column will be lost.
-  - You are about to drop the column `uuhid` on the `users` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[user_uuid]` on the table `users` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `user_id` to the `users` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `user_uuid` to the `users` table without a default value. This is not possible if the table is not empty.
+    UNIQUE INDEX `user_uuid`(`user_uuid`),
+    UNIQUE INDEX `users_username_key`(`username`),
+    UNIQUE INDEX `users_email_key`(`email`),
+    PRIMARY KEY (`user_id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-*/
--- DropForeignKey
-ALTER TABLE `account` DROP FOREIGN KEY `Account_userId_fkey`;
+-- CreateTable
+CREATE TABLE `email_otp_verification` (
+    `email_id` VARCHAR(80) NOT NULL,
+    `OTP` VARCHAR(6) NOT NULL,
 
--- DropIndex
-DROP INDEX `users_uuhid_key` ON `users`;
+    PRIMARY KEY (`email_id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AlterTable
-ALTER TABLE `account` MODIFY `userId` BIGINT NOT NULL;
+-- CreateTable
+CREATE TABLE `account` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` BIGINT NOT NULL,
+    `type` VARCHAR(191) NOT NULL,
+    `provider` VARCHAR(191) NOT NULL,
+    `providerAccountId` VARCHAR(191) NOT NULL,
+    `refresh_token` TEXT NULL,
+    `access_token` TEXT NULL,
+    `expires_at` INTEGER NULL,
+    `token_type` VARCHAR(191) NULL,
+    `scope` VARCHAR(191) NULL,
+    `id_token` TEXT NULL,
+    `session_state` VARCHAR(191) NULL,
 
--- AlterTable
-ALTER TABLE `users` DROP PRIMARY KEY,
-    DROP COLUMN `created_at`,
-    DROP COLUMN `id`,
-    DROP COLUMN `updated_at`,
-    DROP COLUMN `uuhid`,
-    ADD COLUMN `bio` TEXT NULL,
-    ADD COLUMN `country_code` VARCHAR(5) NULL,
-    ADD COLUMN `created_datetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-    ADD COLUMN `dob` DATE NULL,
-    ADD COLUMN `gender` ENUM('M', 'F', 'O') NULL,
-    ADD COLUMN `is_blocked` BOOLEAN NULL DEFAULT false,
-    ADD COLUMN `is_deleted` BOOLEAN NULL DEFAULT false,
-    ADD COLUMN `is_verified` BOOLEAN NULL DEFAULT false,
-    ADD COLUMN `phone_number` VARCHAR(12) NULL,
-    ADD COLUMN `updated_datetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-    ADD COLUMN `user_id` BIGINT NOT NULL AUTO_INCREMENT,
-    ADD COLUMN `user_uuid` VARCHAR(36) NOT NULL,
-    ADD PRIMARY KEY (`user_id`);
+    INDEX `Account_userId_fkey`(`userId`),
+    UNIQUE INDEX `Account_provider_providerAccountId_key`(`provider`, `providerAccountId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `ai_tool_mstr` (
@@ -184,9 +197,6 @@ CREATE TABLE `views` (
 
     PRIMARY KEY (`viewed_by`, `feed_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateIndex
-CREATE UNIQUE INDEX `user_uuid` ON `users`(`user_uuid`);
 
 -- AddForeignKey
 ALTER TABLE `account` ADD CONSTRAINT `Account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

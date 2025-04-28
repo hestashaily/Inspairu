@@ -124,7 +124,6 @@ export const authOptions = {
 
     async session({ session, token }) {
       if (token) {
-        // Make sure we're using the correct structure for the session
         if (!session.user) {
           session.user = {};
         }

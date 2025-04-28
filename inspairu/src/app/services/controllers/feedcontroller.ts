@@ -1,134 +1,105 @@
-import { feed_media_media_type, feeds_feed_type } from "@prisma/client";
 import { getVerifiedUser } from "../utils/fetchVeifiedUser";
+import feedService from "../models/feedmodel";
+import {
+  CreateFeedSchema,
+  UpdateFeedSchema,
+  ReportFeedSchema,
+  GetAllFeedsSchema,
+  GetMyFeedsSchema,
+  FeedUuidSchema,
+  GetOthersFeedsSchema,
+  GetSearchedFeedsSchema,
+  CreateFeedInput,
+  UpdateFeedInput,
+  ReportFeedInput,
+  GetAllFeedsInput,
+  GetMyFeedsInput,
+  GetOthersFeedsInput,
+  GetSearchedFeedsInput,
+} from "../schema/feedSchema";
+import { handleError } from "../utils/handleError";
 
-export interface CreatefeedInput {
-  caption?: string | null;
-  description?: string | null;
-  prompt?: string | null;
-  feedType?: feeds_feed_type;
-  generatedText?: string | null;
-  hashtags?: string[];
-  aiTools?: number[];
-  media?: {
-    thumbnailUrl: string;
-    mediaUrl: string;
-    mediaType: feed_media_media_type;
-  }[];
-}
-
-export async function createFeed(input: CreatefeedInput) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function createFeed(input: CreateFeedInput) {
   try {
-    // Convert user_id from string to number
-    return await feedService.createFeed(BigInt(user.user_id), input);
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const validatedInput = CreateFeedSchema.parse(input);
+    return await feedService.createFeed(BigInt(user.user_id), validatedInput);
   } catch (error) {
-    console.error("Error creating Feed:", error);
-    throw new Error("Could not create Feed.");
+    handleError(error);
   }
 }
 
-export interface UpdateFeedInput {
-  caption?: string | null;
-  description?: string | null;
-  prompt?: string | null;
-  generatedText?: string | null;
-  hashtags?: string[];
-  aiTools?: number[];
-  media?: {
-    thumbnailUrl: string;
-    mediaUrl: string;
-    mediaType: feed_media_media_type;
-  }[];
-}
-
-export async function updateFeed(id: number | string, input: UpdateFeedInput) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function updateFeed(
+  id: bigint | number | string,
+  input: UpdateFeedInput
+) {
   try {
-    // Convert user_id from string to number and ensure id is BigInt
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const validatedInput = UpdateFeedSchema.parse(input);
     return await feedService.updateFeed(
       BigInt(id),
       BigInt(user.user_id),
-      input
+      validatedInput
     );
   } catch (error) {
-    console.error("Error updating Feed:", error);
-    throw new Error("Could not update Feed.");
+    handleError(error);
   }
 }
 
-export async function deleteFeed(id: number | string) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function deleteFeed(id: bigint | number | string) {
   try {
-    // Convert both IDs to BigInt
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
     return await feedService.deleteFeed(BigInt(id), BigInt(user.user_id));
   } catch (error) {
-    console.error("Error deleting Feed:", error);
-    throw new Error("Could not delete Feed.");
+    handleError(error);
   }
 }
 
-export async function reportFeed(feedId: number | string, message: string) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function reportFeed(input: ReportFeedInput) {
   try {
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { feedId, message } = ReportFeedSchema.parse(input);
     return await feedService.reportFeed({
-      feedId: BigInt(feedId),
+      feedId,
       blockedBy: BigInt(user.user_id),
       message,
     });
   } catch (error) {
-    console.error("Error reporting Feed:", error);
-    throw new Error("Could not report Feed.");
+    handleError(error);
   }
 }
 
-export async function getAllFeeds(limit_count: number, offset_count: number) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function getAllFeeds(input: GetAllFeedsInput) {
   try {
-    // Convert user_id from string to BigInt
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { limit_count, offset_count } = GetAllFeedsSchema.parse(input);
     return await feedService.getAllFeeds(
       BigInt(user.user_id),
       limit_count,
       offset_count
     );
   } catch (error) {
-    console.error("Error fetching all Feeds:", error);
-    throw new Error("Could not fetch all Feeds.");
+    handleError(error);
   }
 }
 
-export async function getMyFeeds(
-  q: string | null,
-  aiTools: number[] | null,
-  hashtags: string[] | null,
-  limit_count: number,
-  offset_count: number
-) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function getMyFeeds(input: GetMyFeedsInput) {
   try {
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { q, aiTools, hashtags, limit_count, offset_count } =
+      GetMyFeedsSchema.parse(input);
     return await feedService.getMyFeeds(
       BigInt(user.user_id),
       q,
@@ -138,8 +109,7 @@ export async function getMyFeeds(
       offset_count
     );
   } catch (error) {
-    console.error("Error fetching my Feeds:", error);
-    throw new Error("Could not fetch my Feeds.");
+    handleError(error);
   }
 }
 
@@ -148,52 +118,41 @@ export async function getFeedDetailsByUuid(feedUuid: string) {
     const user = await getVerifiedUser();
     if (!user) throw new Error("Not authenticated");
 
+    const validatedUuid = FeedUuidSchema.parse(feedUuid);
     return await feedService.getFeedDetailsByUuid(
-      feedUuid,
+      validatedUuid,
       BigInt(user.user_id)
     );
   } catch (error) {
-    console.error("Error fetching feed details:", error);
-    throw new Error("Failed to fetch feed details.");
+    handleError(error);
   }
 }
 
-export async function getOthersFeeds(
-  other_uid: number | string,
-  limit_count: number,
-  offset_count: number
-) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function getOthersFeeds(input: GetOthersFeedsInput) {
   try {
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { other_uid, limit_count, offset_count } =
+      GetOthersFeedsSchema.parse(input);
     return await feedService.getOthersFeeds(
       BigInt(user.user_id),
-      BigInt(other_uid),
+      other_uid,
       limit_count,
       offset_count
     );
   } catch (error) {
-    console.error("Error fetching others Feeds:", error);
-    throw new Error("Could not fetch others Feeds.");
+    handleError(error);
   }
 }
 
-export async function getSearchedFeeds(
-  q: string | null,
-  aiTools: number[] | null,
-  hashtags: string[] | null,
-  limit_count: number,
-  offset_count: number
-) {
-  const user = await getVerifiedUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
+export async function getSearchedFeeds(input: GetSearchedFeedsInput) {
   try {
+    const user = await getVerifiedUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const { q, aiTools, hashtags, limit_count, offset_count } =
+      GetSearchedFeedsSchema.parse(input);
     return await feedService.getSearchedFeeds(
       BigInt(user.user_id),
       q,
@@ -203,7 +162,6 @@ export async function getSearchedFeeds(
       offset_count
     );
   } catch (error) {
-    console.error("Error fetching searched Feeds:", error);
-    throw new Error("Could not fetch searched Feeds.");
+    handleError(error);
   }
 }
