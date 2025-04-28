@@ -18,7 +18,8 @@ type ImageCardProps = {
   handleRepost: (data: any) => void; 
 };
 
-export default function ImageCard({ data, handleRepost }: ImageCardProps) {
+export default function ImageCard({ data, handleRepost, onClick }: ImageCardProps & { onClick?: () => void }) {
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
   const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function ImageCard({ data, handleRepost }: ImageCardProps) {
   }, []);
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div   className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
       <Repost/>
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">
@@ -100,8 +101,8 @@ export default function ImageCard({ data, handleRepost }: ImageCardProps) {
           )}
         </div>
       </div>
-
-      <div className="pt-[10px]">
+<div  onClick={onClick}>
+      <div  className="pt-[10px]">
         <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{data.title}</p>
         <p className="font-[400] text-[16px] text-[#525252]">{data.description}</p>
       </div>
@@ -114,7 +115,7 @@ export default function ImageCard({ data, handleRepost }: ImageCardProps) {
           </span>
           <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
             #lorem #quote #learn #lorem #quote #learn #lorem #quote #learn
-            #lorem #quote #learn...
+            
           </span>
           <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
             Promt - A witty tweet about productivity, A witty tweet about
@@ -188,6 +189,7 @@ export default function ImageCard({ data, handleRepost }: ImageCardProps) {
           <CommentBox />
         </div>
       )}
+      </div>
     </div>
   );
 }

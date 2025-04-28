@@ -2,7 +2,6 @@
 // "use client";
 // import Image from "next/image";
 // import { useState, useRef, useEffect } from "react";
-// import { useRouter } from "next/navigation";
 // import {
 //   Closepopup,
 //   Comment,
@@ -13,103 +12,103 @@
 //   Share,
 //   Threedost,
 // } from "../../icon";
-// import Repost from "../Repost";
 // import CommentBox from "../CommentBox";
 // import Link from "next/link";
 
-// export default function TextCard({ postId }: { postId?: string }) {
+// export default function TextCard({
+//   postId,
+//   userName,
+//   userImage,
+//   contentHeading,
+//   contentDescription,
+//   contentText,
+//   tags = [],
+//   prompt,
+//   handleRepost, 
+// }: {
+//   postId?: string;
+//   userName: string;
+//   userImage: string;
+//   contentHeading: string;
+//   contentDescription: string;
+//   contentText: string;
+//   tags: string[];
+//   prompt: string;
+//   handleRepost: (data: any) => void;
+// })  {
 //   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 //   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
 //   const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
-//   const dropdownRef = useRef<HTMLDivElement>(null);
-
-//   const router = useRouter();
-//   const inputRef = useRef<HTMLInputElement>(null);
 //   const [copied, setCopied] = useState(false);
+
+//   const dropdownRef = useRef<HTMLDivElement>(null);
+//   const sharePopupRef = useRef<HTMLDivElement>(null);
+//   const inputRef = useRef<HTMLInputElement>(null);
+
+//   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+//   const toggleCommentBox = () => setIsCommentBoxOpen((prev) => !prev);
+//   const toggleSharePopup = () => setIsSharePopupOpen((prev) => !prev);
 
 //   const handleCopy = () => {
 //     if (inputRef.current) {
-//       navigator.clipboard
-//         .writeText(inputRef.current.value)
-//         .then(() => {
-//           setCopied(true);
-//           setTimeout(() => setCopied(false), 2000);
-//         })
-//         .catch((err) => console.error("Copy failed", err));
+//       navigator.clipboard.writeText(inputRef.current.value).then(() => {
+//         setCopied(true);
+//         setTimeout(() => setCopied(false), 2000);
+//       });
 //     }
 //   };
 
-//   const toggleDropdown = () => {
-//     setIsDropdownOpen((prev) => !prev);
+//   const handleRepostClick = () => {
+//     handleRepost({
+//       type: "text", 
+//       postId,
+//       userName,
+//       userImage,
+//       contentHeading,
+//       contentDescription,
+//       contentText,
+//       tags,
+//       prompt,
+//     });
+//     setIsDropdownOpen(false);
 //   };
-
-//   const toggleCommentBox = () => {
-//     setIsCommentBoxOpen((prev) => !prev);
-//   };
-
-//   const toggleSharePopup = () => {
-//     setIsSharePopupOpen((prev) => !prev);
-//   };
-
-//   const sharePopupRef = useRef<HTMLDivElement>(null);
 
 //   useEffect(() => {
 //     const handleClickOutside = (event: MouseEvent) => {
-//       if (
-//         sharePopupRef.current &&
-//         !sharePopupRef.current.contains(event.target as Node)
-//       ) {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+//         setIsDropdownOpen(false);
+//       }
+//       if (sharePopupRef.current && !sharePopupRef.current.contains(event.target as Node)) {
 //         setIsSharePopupOpen(false);
 //       }
 //     };
-
 //     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
 //   }, []);
 
-//   useEffect(() => {
-//     const handleClickOutside = (event: MouseEvent) => {
-//       if (
-//         dropdownRef.current &&
-//         !dropdownRef.current.contains(event.target as Node)
-//       ) {
-//         setIsDropdownOpen(false);
-//       }
-//     };
-
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, []);
 //   return (
-//        <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+//     <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+//       {/* Header */}
 //       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
 //         <div className="flex items-center gap-[12px]">
-//           <Image
-//             src="/auth-images/notifyTwo.png"
-//             width={38}
-//             height={38}
-//             alt="apple"
-//           />
+//           <Image src={userImage} width={38} height={38} alt="user profile" />
 //           <div>
-//             <p className="font-[700] text-[16px] text-[#1E293B]">sam</p>
-//             <p className="font-[400] text-[12px] text-[#475569]">
-//               Brooklyn Simmons
-//             </p>
+//             <p className="font-[700] text-[16px] text-[#1E293B]">{userName}</p>
+//             <p className="font-[400] text-[12px] text-[#475569]">Brooklyn Simmons</p>
 //           </div>
 //         </div>
 
+//         {/* Dropdown */}
 //         <div ref={dropdownRef} className="relative">
 //           <div onClick={toggleDropdown} className="cursor-pointer">
 //             <Threedost />
 //           </div>
-
 //           {isDropdownOpen && (
 //             <div className="absolute right-0 mt-2 w-[150px] bg-white shadow-lg rounded-md p-2 z-50">
-//               <p className="text-[18px] font-[400] text-[#525252] flex items-center gap-[16px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+//               <p
+//                 onClick={handleRepostClick}
+//                 className="text-[18px] font-[400] text-[#525252] flex items-center gap-[16px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer"
+//               >
 //                 <Repostdropdown />
 //                 Repost
 //               </p>
@@ -122,19 +121,16 @@
 //         </div>
 //       </div>
 
+//       {/* Content */}
 //       <div className="pt-[10px]">
-//         <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">Content Heading</p>
-//         <p className="font-[400] text-[16px] text-[#525252]">
-//           Lorem ipsum dolor sit amet consectetur. Aliquam...
-//         </p>
+//         <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{contentHeading}</p>
+//         <p className="font-[400] text-[16px] text-[#525252]">{contentDescription}</p>
 //         <div className="mt-[14px] flex items-center gap-[23px] flex-wrap border border-[#E3E3E3] rounded-[15px] p-[16px]">
-//           <p className="font-[400] text-[16px] text-[#525252]">Aliquam magna. dolor sit . Aliquam magna Lorem ipsum dolor sit amet consectetur.  Lorem ipsum dolor sit . Aliquam magna Lorem ipsum dolor sit amet </p>
-// <p className="font-[400] text-[16px] text-[#525252]">
-
-// Aliquam magna Lorem ipsum dolor sit amet consectetur. Aliquam magna. Lorem ipsum dolor sit .  Aliquam  Aliquam magna Lorem ipsum dolor sit amet consectetur. Aliquam magna. Lorem ipsum dolor sit . Aliquam magna Lorem ipsum dolor sit amet co</p></div>
+//           <p className="font-[400] text-[16px] text-[#525252]">{contentText}</p>
+//         </div>
 //       </div>
 
-//       <div className="mt-[14px] flex items-center gap-[23px] flex-wrap">
+//       <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
 //           <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
 //             ChatGPT
 //           </span>
@@ -146,9 +142,12 @@
 //             #lorem #quote #learn...
 //           </span>
 //           <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
-//           Promt - A witty tweet about productivity, A witty tweet about productivity 
+//             Promt - A witty tweet about productivity, A witty tweet about
+//             productivity
 //           </span>
 //         </div>
+
+//       {/* Buttons */}
 //       <div className="mt-[22px] flex items-center gap-[9px]">
 //         <div className="flex gap-[6px] items-center p-[10px] bg-[#F9DFE9] max-w-[80px] w-full rounded-full cursor-pointer">
 //           <Like />
@@ -161,34 +160,36 @@
 //         <div onClick={toggleSharePopup} className="flex items-center justify-center p-[10px] bg-[#F9DFE9] max-w-[45px] w-full rounded-full cursor-pointer">
 //           <Share />
 //         </div>
-        
-//         {isSharePopupOpen && (
-//           <div className="fixed inset-0 bg-[#202020B5] flex items-center justify-center z-50">
-//             <div ref={sharePopupRef} className="bg-white rounded-lg p-6 shadow-xl max-w-[437px] w-full text-center relative">
-//               <button onClick={toggleSharePopup} className="absolute top-2 cursor-pointer right-2 text-gray-500 hover:text-gray-700 text-xl">
-//                 <Closepopup />
-//               </button>
-//               <h2 className="text-[25px] font-[600] text-[#525252] mb-4">Share</h2>
-//               <div className="flex items-center justify-center gap-[23px]">
-//                 <Link href="!#"><Image src="/home-images/insta.png" alt="instagram" width={68} height={68} /></Link>
-//                 <Link href="#!"><Image src="/home-images/youtube.png" alt="youtube" width={68} height={68} /></Link>
-//                 <Link href="!#"><Image src="/home-images/fb.png" alt="facebook" width={68} height={68} /></Link>
-//               </div>
-//               <div className="flex w-full items-start justify-start flex-col mt-[35px]">
-//                 <label htmlFor="pageLink" className="font-[500] text-[20px] text-[#525252]">Page Link</label>
-//                 <div className="bg-[#F1F1F1] py-[10px] px-[12px] rounded-[9px] mt-[20px] w-full flex items-center justify-between">
-//                   <input id="pageLink" type="text" readOnly ref={inputRef} className="w-full bg-transparent outline-none text-[#525252]" defaultValue="http://www.statholdings.com" />
-//                   <div onClick={handleCopy} className="cursor-pointer ml-2">
-//                     <Copyclip />
-//                   </div>
-//                 </div>
-//                 {copied && <span className="text-green-600 text-sm mt-2">Link copied!</span>}
-//               </div>
-//             </div>
-//           </div>
-//         )}
 //       </div>
 
+//       {/* Share Popup */}
+//       {isSharePopupOpen && (
+//         <div className="fixed inset-0 bg-[#202020B5] flex items-center justify-center z-50">
+//           <div ref={sharePopupRef} className="bg-white rounded-lg p-6 shadow-xl max-w-[437px] w-full text-center relative">
+//             <button onClick={toggleSharePopup} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl cursor-pointer">
+//               <Closepopup />
+//             </button>
+//             <h2 className="text-[25px] font-[600] text-[#525252] mb-4">Share</h2>
+//             <div className="flex items-center justify-center gap-[23px]">
+//               <Link href="#"><Image src="/home-images/insta.png" alt="instagram" width={68} height={68} /></Link>
+//               <Link href="#"><Image src="/home-images/youtube.png" alt="youtube" width={68} height={68} /></Link>
+//               <Link href="#"><Image src="/home-images/fb.png" alt="facebook" width={68} height={68} /></Link>
+//             </div>
+//             <div className="flex flex-col mt-[35px] text-left">
+//               <label htmlFor="pageLink" className="font-[500] text-[20px] text-[#525252]">Page Link</label>
+//               <div className="bg-[#F1F1F1] py-[10px] px-[12px] rounded-[9px] mt-[20px] flex items-center">
+//                 <input id="pageLink" type="text" readOnly ref={inputRef} className="w-full bg-transparent outline-none text-[#525252]" defaultValue="http://www.statholdings.com" />
+//                 <div onClick={handleCopy} className="cursor-pointer ml-2">
+//                   <Copyclip />
+//                 </div>
+//               </div>
+//               {copied && <span className="text-green-600 text-sm mt-2">Link copied!</span>}
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* Comment Box */}
 //       {isCommentBoxOpen && (
 //         <div className="mt-4">
 //           <CommentBox />
@@ -197,9 +198,11 @@
 //     </div>
 //   );
 // }
+
 "use client";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Closepopup,
   Comment,
@@ -210,30 +213,28 @@ import {
   Share,
   Threedost,
 } from "../../icon";
-import CommentBox from "../CommentBox";
 import Link from "next/link";
+import CommentBox from "../CommentBox";
 
-export default function TextCard({
-  postId,
-  userName,
-  userImage,
-  contentHeading,
-  contentDescription,
-  contentText,
-  tags = [],
-  prompt,
-  handleRepost, // ← pass this from Feed
-}: {
-  postId?: string;
-  userName: string;
-  userImage: string;
-  contentHeading: string;
-  contentDescription: string;
-  contentText: string;
-  tags: string[];
-  prompt: string;
+type TextCardProps = {
+  data: {
+    postId: string;
+    userName: string;
+    userImage: string;
+    contentHeading: string;
+    contentDescription: string;
+    contentText: string;
+    tags: string[];
+    prompt: string;
+  };
   handleRepost: (data: any) => void;
-}) {
+  onClick: () => void;
+};
+
+export default function TextCard({ data, handleRepost, onClick }: TextCardProps) {
+  console.log(data);
+  
+  const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
   const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
@@ -255,23 +256,25 @@ export default function TextCard({
       });
     }
   };
-
   const handleRepostClick = () => {
     handleRepost({
-      type: "text", // ← so RepostPopup knows what to render
-      postId,
-      userName,
-      userImage,
-      contentHeading,
-      contentDescription,
-      contentText,
-      tags,
-      prompt,
+      type: "text",
+      postId: data.postId,
+      userName: data.userName,
+      userImage: data.userImage,
+      contentHeading: data.contentHeading,
+      contentDescription: data.contentDescription,
+      contentText: data.contentText,
+      tags: data.tags,
+      prompt: data.prompt,
     });
     setIsDropdownOpen(false);
   };
+  
+ 
 
   useEffect(() => {
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
@@ -283,15 +286,24 @@ export default function TextCard({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  
+  const handleCardClick = () => {
+    alert("click")
+    router.push(`/details/${data.postId}`);  
+  };
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div
+    onClick={handleCardClick}
+      className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px] cursor-pointer"
+    >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">
-          <Image src={userImage} width={38} height={38} alt="user profile" />
+        {/* <Image src={data.userImage} width={38} height={38} alt="user profile" /> */}
+
           <div>
-            <p className="font-[700] text-[16px] text-[#1E293B]">{userName}</p>
+            <p className="font-[700] text-[16px] text-[#1E293B]">{data.userName}</p>
             <p className="font-[400] text-[12px] text-[#475569]">Brooklyn Simmons</p>
           </div>
         </div>
@@ -321,29 +333,24 @@ export default function TextCard({
 
       {/* Content */}
       <div className="pt-[10px]">
-        <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{contentHeading}</p>
-        <p className="font-[400] text-[16px] text-[#525252]">{contentDescription}</p>
+        <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{data.contentHeading}</p>
+        <p className="font-[400] text-[16px] text-[#525252]">{data.contentDescription}</p>
         <div className="mt-[14px] flex items-center gap-[23px] flex-wrap border border-[#E3E3E3] rounded-[15px] p-[16px]">
-          <p className="font-[400] text-[16px] text-[#525252]">{contentText}</p>
+          <p className="font-[400] text-[16px] text-[#525252]">{data.contentText}</p>
         </div>
       </div>
 
-      <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
-            ChatGPT
+      {/* Tags */}
+      {/* <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
+        {tags.map((tag, index) => (
+          <span
+            key={index}
+            className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]"
+          >
+            {tag}
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
-            DeepL
-          </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
-            #lorem #quote #learn #lorem #quote #learn #lorem #quote #learn
-            #lorem #quote #learn...
-          </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
-            Promt - A witty tweet about productivity, A witty tweet about
-            productivity
-          </span>
-        </div>
+        ))}
+      </div> */}
 
       {/* Buttons */}
       <div className="mt-[22px] flex items-center gap-[9px]">
@@ -390,7 +397,7 @@ export default function TextCard({
       {/* Comment Box */}
       {isCommentBoxOpen && (
         <div className="mt-4">
-          <CommentBox />
+           <CommentBox/>
         </div>
       )}
     </div>

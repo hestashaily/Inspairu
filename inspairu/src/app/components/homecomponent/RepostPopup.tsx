@@ -24,7 +24,8 @@ type RepostProps = {
 };
 
 export default function RepostPopup({ data, onClose }: RepostProps) {
-  console.log(data.imageSrc);
+
+
 
   return (
     <div className="fixed inset-0 bg-[#202020B5] flex   items-center justify-center z-50">
@@ -55,10 +56,10 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
           </div>
         </div>
 
-        {/* Content Heading and Description */}
+        
         {data.contentHeading && (
           <div className="text-left mb-4 ">
-            <h3 className="font-semibold text-xl text-[#333]">
+            <h3 className="font-semibold text-xl text-[#333] mt-[8px]">
               {data.contentHeading}
             </h3>
           </div>
@@ -69,7 +70,7 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
           </div>
         )}
 
-        {/* ImageCard Title and Description */}
+
         {data.title && (
           <div className="text-left  mt-[10px]">
             <h3 className="font-semibold text-xl text-[#333]">{data.title}</h3>
@@ -80,8 +81,6 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
             <p className="text-sm text-gray-600">{data.description}</p>
           </div>
         )}
-
-        {/* Text Content */}
         {data.type === "text" && (
           <>
             {data.description && (
@@ -95,7 +94,6 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
           </>
         )}
 
-        {/* 📸 Image Content */}
         {data.imageSrc && (
           <div className="mt-4">
             <img
@@ -106,7 +104,6 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
           </div>
         )}
 
-        {/* Render audio if the post type is audio */}
         {data.type === "audio" && data.audioSrc && (
           <CustomAudioPlayer audioSrc={data.audioSrc} />
         )}
@@ -118,7 +115,7 @@ export default function RepostPopup({ data, onClose }: RepostProps) {
         )}
 
       </div>
-      <button className="font-[500] text-[#FFFFFF] text-[16px] btn-gradient py-[10px] rounded-[33px]">Post</button>
+      <button className="font-[500] cursor-pointer text-[#FFFFFF] text-[16px] btn-gradient py-[10px] rounded-[33px]">Post</button>
       </div>
 
     </div>
