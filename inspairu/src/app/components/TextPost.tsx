@@ -1,7 +1,14 @@
 "use client";
 
+import { useState } from "react";
 
 export default function TextPost() {
+  const [caption, setCaption] = useState("");
+  const [AITools, setAITools] = useState("");
+  const [pompts, setPromts] = useState("");
+  const [hastage, setHastage] = useState("");
+  const [description, setDescription] = useState("");
+  const [genratedText, setGenratedText] = useState("");
   return (
     <div className="w-full max-w-full mt-[24px]">
       <div className="flex items-center w-full gap-[22px]">
@@ -82,7 +89,7 @@ export default function TextPost() {
           htmlFor="description"
           className="font-[600] text-[18px] text-[#525252]"
         >
-         Your Generated Text
+          Your Generated Text
         </label>
         <textarea
           name="description"

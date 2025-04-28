@@ -8,10 +8,14 @@ import {
   Privacypolicy,
   Help,
   Logout,
-  GradientCross,
 } from "../icon";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
+  const { data: session } = useSession();
+  const handleGoogleLogout = () => {
+    signOut({ callbackUrl: "/" });
+  };
   const [showNotificationDropdown, setShowNotificationDropdown] =
     useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -174,18 +178,18 @@ export default function Header() {
                   </p>
                 </div>
               </div>
-          
-             
             </div>
           )}
         </div>
+        {/* profile section */}
         <div ref={profileRef} className="relative">
           <div
             className="cursor-pointer"
             onClick={() => setShowProfileDropdown((prev) => !prev)}
           >
             <Image
-              src="/auth-images/profile-avatar.png"
+              src={session?.user?.image || "/auth-images/profile-avatar.png"}
+              // src="/auth-images/profile-avatar.png"
               width={40}
               height={40}
               alt="profile"
@@ -213,7 +217,10 @@ export default function Header() {
                 <Help />
                 Help
               </p>
-              <p className="text-[14px]  p-[7px]  hover:bg-[#F9DFE9A3]  mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer ">
+              <p
+                onClick={handleGoogleLogout}
+                className="text-[14px]  p-[7px]  hover:bg-[#F9DFE9A3]  mt-[10px] text-[#525252] font-[400] flex items-center gap-[12px] cursor-pointer "
+              >
                 <Logout />
                 Logout
               </p>

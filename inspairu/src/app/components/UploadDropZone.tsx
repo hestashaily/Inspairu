@@ -12,7 +12,11 @@ type MediaPreview = {
 
 export default function UploadDropZone() {
   const [previews, setPreviews] = useState<MediaPreview[]>([]);
-
+  const [caption, setCaption] = useState("");
+  const [AITools, setAITools] = useState("");
+  const [pompts, setPromts] = useState("");
+  const [hastage, setHastage] = useState("");
+  const [description, setDescription] = useState("");
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
 
@@ -57,7 +61,7 @@ export default function UploadDropZone() {
   };
 
   return (
-    <div className="flex items-start gap-[40px] flex-wrap mt-[15px] ">
+    <div className="flex items-start gap-[40px] flex-wrap mt-[15px]  ">
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -113,7 +117,9 @@ export default function UploadDropZone() {
               </button>
 
               {media.type === "image" && (
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={media.url}
                   alt="Preview"
                   className="w-full h-full object-cover rounded"
@@ -145,6 +151,8 @@ export default function UploadDropZone() {
             <input
               type="text"
               name="Caption"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
               placeholder="Write title of post"
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />

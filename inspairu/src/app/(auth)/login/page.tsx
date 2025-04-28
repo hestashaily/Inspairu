@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 const Page: React.FC = () => {
   const route = useRouter();
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/" });
+    signIn("google", { callbackUrl: "/home" });
+
   };
   const { data: session, status } = useSession();
 
@@ -36,7 +37,7 @@ const Page: React.FC = () => {
       if (result?.ok) {
         toast.success("Login successful");
         console.log("Login successful");
-        route.push("/homepage");
+        route.push("/home");
       }
     } catch (error) {
       console.error("Error during login:", error);
