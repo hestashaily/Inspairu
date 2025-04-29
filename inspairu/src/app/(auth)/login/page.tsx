@@ -11,7 +11,6 @@ const Page: React.FC = () => {
   const route = useRouter();
   const handleGoogleSignIn = () => {
     signIn("google", { callbackUrl: "/home" });
-
   };
   const { data: session, status } = useSession();
 

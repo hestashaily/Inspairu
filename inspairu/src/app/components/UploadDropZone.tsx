@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Upload } from "../icon";
 import Image from "next/image";
 
@@ -10,13 +10,49 @@ type MediaPreview = {
   url: string;
 };
 
+interface AITool {
+  id: number;
+  name: string;
+}
+
 export default function UploadDropZone() {
   const [previews, setPreviews] = useState<MediaPreview[]>([]);
+  const [mediaFormData, setMediaFormData] = useState({
+    media: "",
+    Caption: "",
+    Aitool: [],
+    Prompts: "",
+    Hastags: [],
+    Description: "",
+  });
   const [caption, setCaption] = useState("");
+
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [AITools, setAITools] = useState("");
+  const [tools, setTools] = useState<AITool[]>([]);
   const [pompts, setPromts] = useState("");
   const [hastage, setHastage] = useState("");
   const [description, setDescription] = useState("");
+  console.log("this is selecrted AI tool", AITools);
+  console.log("tihs is caption dta", caption);
+  console.log("tis  is prmp data", pompts);
+  console.log("tis is descriprton", description);
+
+  useEffect(() => {
+    // Fetch AI tools from the backend
+    const fetchAITools = async () => {
+      try {
+        const response = await fetch("/api/fromfielddata"); // Update with your API route
+        const data = await response.json();
+        console.log("data is", data);
+        setTools(data); // Assuming the API returns an array of AI tools
+      } catch (error) {
+        console.error("Error fetching AI tools:", error);
+      }
+    };
+
+    fetchAITools();
+  }, []);
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
 
@@ -60,6 +96,60 @@ export default function UploadDropZone() {
     setPreviews((prev) => prev.filter((media) => media.id !== id));
   };
 
+  // <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full relative">
+  //   <label
+  //     htmlFor="ai-tool-used"
+  //     className="font-semibold block text-[16px] text-[#525252]"
+  //   >
+  //     AI Tool Used*
+  //   </label>
+
+  //   {/* Custom Input Field */}
+  //   <div
+  //     onClick={() => setShowDropdown(!showDropdown)}
+  //     className="border border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D] outline-none cursor-pointer flex flex-wrap gap-2 min-h-[40px]"
+  //   >
+  //     {AITools.length > 0 ? (
+  //       AITools.map((tool, index) => (
+  //         <span
+  //           key={index}
+  //           className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-[12px]"
+  //         >
+  //           {tool}
+  //         </span>
+  //       ))
+  //     ) : (
+  //       <span className="text-[#8D8D8D]">Select AI tools</span>
+  //     )}
+  //   </div>
+
+  //   {/* Dropdown List */}
+  //   {showDropdown && (
+  //     <div className="absolute top-[100%] left-0 w-full border border-[#CBD5E1] rounded-lg bg-white shadow-md mt-1 max-h-[200px] overflow-y-auto z-10">
+  //       {tools.map((tool) => (
+  //         <div
+  //           key={tool.id}
+  //           onClick={() => handleToolClick(tool.name)}
+  //           className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
+  //             AITools.includes(tool.name) ? "bg-blue-200 font-semibold" : ""
+  //           }`}
+  //         >
+  //           {tool.name}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   )}
+  // </div>;
+
+  const handleToolClick = (toolName: string) => {
+    if (AITools.includes(toolName)) {
+      // If already selected, unselect
+      setAITools(AITools.filter((name) => name !== toolName));
+    } else {
+      // Add to selection
+      setAITools([...AITools, toolName]);
+    }
+  };
   return (
     <div className="flex items-start gap-[40px] flex-wrap mt-[15px]  ">
       <div
@@ -100,7 +190,10 @@ export default function UploadDropZone() {
           className="hidden"
         />
       </div>
-      <div className="flex items-start flex-col max-w-[530px] w-full">
+      <div
+        // onClick={setShowDropdown(false)}
+        className="flex items-start flex-col max-w-[530px] w-full"
+      >
         {/* preview  */}
         <div className="flex flex-wrap gap-4 max-w-[600px] mb-4">
           {previews.map((media) => (
@@ -157,20 +250,85 @@ export default function UploadDropZone() {
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
           </div>
-          <div className="flex flex-col gap-[10px] w-full mt-[15px]  max-w-full">
+          {/* AI tools section  */}
+          {/* <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full">
             <label
               htmlFor="AI Tool Used"
               className="font-semibold block text-[16px] text-[#525252]"
             >
               AI Tool Used*
             </label>
-            <input
-              type="text"
+
+            <select
               name="AI Tool Used"
-              placeholder="Write AI tool used"
+              value={AITools}
+              onChange={(e) => setAITools(e.target.value)}
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
-            />
+            >
+              <option value="" disabled>
+                Select an AI tool
+              </option>{" "}
+              {tools.map((tool) => (
+                <option key={tool.id} value={tool.name}>
+                  {" "}
+                  {tool.name}
+                </option>
+              ))}
+            </select>
+
+            {AITools && (
+              <p className="mt-2 text-[#525252] text-[14px]">
+                Selected AI Tool:{" "}
+                <span className="font-semibold">{AITools}</span>
+              </p>
+            )}
+          </div> */}
+
+          <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full relative">
+            <label
+              htmlFor="ai-tool-used"
+              className="font-semibold block text-[16px] text-[#525252]"
+            >
+              AI Tool Used*
+            </label>
+
+            {/* Custom Input Field */}
+            <div
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="border border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D] outline-none cursor-pointer flex flex-wrap gap-2 min-h-[40px]"
+            >
+              {AITools.length > 0 ? (
+                AITools.map((tool, index) => (
+                  <span
+                    key={index}
+                    className="bg-[#EFEFEF] text-[#8D8D8D] px-2 py-1 rounded-full text-[12px]"
+                  >
+                    {tool}
+                  </span>
+                ))
+              ) : (
+                <span className="text-[#8D8D8D]">Select AI tools</span>
+              )}
+            </div>
+
+            {/* Dropdown List */}
+            {showDropdown && (
+              <div className="absolute top-[100%] left-0 w-full border border-[#CBD5E1] rounded-lg bg-white shadow-md mt-1 max-h-[200px] overflow-y-auto z-10">
+                {tools.map((tool) => (
+                  <div
+                    key={tool.id}
+                    onClick={() => handleToolClick(tool.name)}
+                    className={`px-4 py-2 cursor-pointer text-black hover:bg-blue-100 ${
+                      AITools.includes(tool.name) ? "" : ""
+                    }`}
+                  >
+                    {tool.name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
           <div className="flex flex-col gap-[10px] w-full mt-[15px]  max-w-full">
             <label
               htmlFor="AI Tool Used"
@@ -181,6 +339,8 @@ export default function UploadDropZone() {
             <input
               type="text"
               name="Promts"
+              value={pompts}
+              onChange={(e) => setPromts(e.target.value)}
               placeholder="Write your promts"
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
@@ -195,6 +355,8 @@ export default function UploadDropZone() {
             <input
               type="text"
               name="Hashtags"
+              value={hastage}
+              onChange={(e) => setHastage(e.target.value)}
               placeholder="Write hashtags"
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
@@ -208,6 +370,8 @@ export default function UploadDropZone() {
             </label>
             <textarea
               name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="Write a short description"
               className="noresize border border-[#CBD5E1] rounded-[14px] w-full min-h-[128px] h-full resize-none outline-none p-[8px] font-[500] text-[14px] text-[#8D8D8D]"
             ></textarea>
