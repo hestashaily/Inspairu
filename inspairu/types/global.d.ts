@@ -102,3 +102,13 @@ interface userProps {
   created_datetime: Date | string;
   updated_datetime: Date | string;
 }
+
+interface MediaForm {
+  Media: string;
+  Caption: string;
+  Aitool: Array;
+  Prompts: string;
+  Hastags: Array;
+  Description: string;
+  GenratedText: string;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { MediaForm } from "../../../types/global";
 
 type MediaPreview = {
   id: string;
@@ -12,18 +13,25 @@ interface AITool {
   id: number;
   name: string;
 }
-
-export default function TextPost() {
+interface MediaFormProps {
+  updateFormData: (data: Partial<MediaForm>) => void;
+  mediaFormData: MediaForm;
+}
+export default function TextPost({
+  mediaFormData,
+  updateFormData,
+}: MediaFormProps) {
   const [previews, setPreviews] = useState<MediaPreview[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [tools, setTools] = useState<AITool[]>([]);
 
   const [caption, setCaption] = useState("");
-  const [AITools, setAITools] = useState("");
+  const [AITools, setAITools] = useState<AITool[]>([]);
   const [pompts, setPromts] = useState("");
   const [hastage, setHastage] = useState("");
   const [description, setDescription] = useState("");
   const [genratedText, setGenratedText] = useState("");
+  console.log("tthis id text from form ", genratedText);
   useEffect(() => {
     // Fetch AI tools from the backend
     const fetchAITools = async () => {
@@ -40,13 +48,24 @@ export default function TextPost() {
     fetchAITools();
   }, []);
 
-  const handleToolClick = (toolName: string) => {
-    if (AITools.includes(toolName)) {
-      // If already selected, unselect
-      setAITools(AITools.filter((name) => name !== toolName));
+  useEffect(() => {
+    updateFormData({
+      Caption: caption,
+      Aitool: AITools,
+      Prompts: pompts,
+      Hastags: hastage.split(",").map((tag) => tag.trim()),
+      Description: description,
+      GenratedText: genratedText,
+    });
+  }, [caption, AITools, pompts, hastage, description]);
+
+  const handleToolClick = (tool: AITool) => {
+    const isSelected = AITools.some((t) => t.id === tool.id);
+
+    if (isSelected) {
+      setAITools(AITools.filter((t) => t.id !== tool.id));
     } else {
-      // Add to selection
-      setAITools([...AITools, toolName]);
+      setAITools([...AITools, tool]);
     }
   };
   return (
@@ -62,6 +81,8 @@ export default function TextPost() {
           <input
             type="text"
             name="caption"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
             placeholder="Write title of post"
             className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
           />
@@ -95,12 +116,12 @@ export default function TextPost() {
             className="border border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D] outline-none cursor-pointer flex flex-wrap gap-2 min-h-[40px]"
           >
             {AITools.length > 0 ? (
-              AITools.map((tool, index) => (
+              AITools.map((tool) => (
                 <span
-                  key={index}
+                  key={tool.id}
                   className="bg-[#EFEFEF] text-[#8D8D8D] px-2 py-1 rounded-full text-[12px]"
                 >
-                  {tool}
+                  {tool.name}
                 </span>
               ))
             ) : (
@@ -114,9 +135,9 @@ export default function TextPost() {
               {tools.map((tool) => (
                 <div
                   key={tool.id}
-                  onClick={() => handleToolClick(tool.name)}
+                  onClick={() => handleToolClick(tool)}
                   className={`px-4 py-2 cursor-pointer text-black hover:bg-blue-100 ${
-                    AITools.includes(tool.name) ? "" : ""
+                    AITools.some((t) => t.id === tool.id) ? "bg-blue-100" : ""
                   }`}
                 >
                   {tool.name}
@@ -137,6 +158,8 @@ export default function TextPost() {
           <input
             type="text"
             name="Promts"
+            value={pompts}
+            onChange={(e) => setPromts(e.target.value)}
             placeholder="Write your promts"
             className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
           />
@@ -151,6 +174,8 @@ export default function TextPost() {
           <input
             type="text"
             name="Hashtags"
+            value={hastage}
+            onChange={(e) => setHastage(e.target.value)}
             placeholder="Write AI tool used"
             className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
           />
@@ -165,6 +190,8 @@ export default function TextPost() {
         </label>
         <textarea
           name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className="noresize border border-[#CBD5E1] rounded-[14px] w-full min-h-[128px] h-full resize-none outline-none p-[8px] font-[500] text-[14px] text-[#8D8D8D]"
           placeholder="Write a short description"
         ></textarea>
@@ -177,7 +204,9 @@ export default function TextPost() {
           Your Generated Text
         </label>
         <textarea
-          name="description"
+          name="genrate text"
+          value={genratedText}
+          onChange={(e) => setGenratedText(e.target.value)}
           className="noresize border border-[#CBD5E1] rounded-[14px] w-full min-h-[252px] h-full resize-none outline-none p-[8px] font-[500] text-[14px] text-[#8D8D8D]"
         ></textarea>
       </div>
