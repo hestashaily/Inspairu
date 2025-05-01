@@ -5,7 +5,10 @@ import {
   CreateFeedModel,
 } from "@/app/backend/model/feed.model";
 import { getVerifiedUser } from "@/app/services/utils/fetchVeifiedUser";
-import { createFeedService } from "@/app/backend/services/feed.service";
+import {
+  createFeedService,
+} from "@/app/backend/services/feed.service";
+import { prisma } from "@/lib/prisma";
 
 export async function createFeedAction(formData: unknown) {
   // 1) validate
@@ -26,4 +29,11 @@ export async function createFeedAction(formData: unknown) {
     parsed.data as CreateFeedInput,
     BigInt(user.user_id)
   );
+}
+
+export async function showAllFeadAction() {
+  const user = await getVerifiedUser();
+  if (!user) throw new Error("Not authenticated");
+
+  return await prisma.feeds.findMany();
 }

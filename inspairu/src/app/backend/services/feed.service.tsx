@@ -26,7 +26,7 @@ export const createFeedService = async (
     if (aiTools && aiTools.length > 0) {
       await tx.feed_ai_tool.createMany({
         data: aiTools.map((tool) => ({
-          feed_id: Number(feed.id), // assuming feed.id is bigint
+          feed_id: Number(feed.id),
           ai_tool_id: tool.id,
         })),
       });
@@ -52,4 +52,10 @@ export const createFeedService = async (
 
     return feed;
   });
+};
+
+export const callAllFeedServices = async () => {
+  const feeds = await prisma.feeds.findMany();
+  return feeds;
+
 };

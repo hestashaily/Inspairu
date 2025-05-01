@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { MediaForm } from "../../../types/global";
 
-type MediaPreview = {
-  id: string;
-  type: "image" | "video" | "audio";
-  url: string;
-};
+// type MediaPreview = {
+//   id: string;
+//   type: "image" | "video" | "audio";
+//   url: string;
+// };
 
 interface AITool {
   id: number;
@@ -21,7 +21,7 @@ export default function TextPost({
   mediaFormData,
   updateFormData,
 }: MediaFormProps) {
-  const [previews, setPreviews] = useState<MediaPreview[]>([]);
+  // const [previews, setPreviews] = useState<MediaPreview[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [tools, setTools] = useState<AITool[]>([]);
 
@@ -57,7 +57,7 @@ export default function TextPost({
       Description: description,
       GenratedText: genratedText,
     });
-  }, [caption, AITools, pompts, hastage, description]);
+  }, [caption, AITools, pompts, hastage, description, genratedText]);
 
   const handleToolClick = (tool: AITool) => {
     const isSelected = AITools.some((t) => t.id === tool.id);
@@ -87,21 +87,6 @@ export default function TextPost({
             className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
           />
         </div>
-        {/* <div className="flex flex-col gap-[10px] w-[50%]">
-          <label
-            htmlFor="aitool"
-            className="font-[600] text-[18px] text-[#525252]"
-          >
-            AI Tool Used*
-          </label>
-          <input
-            type="text"
-            name="aitool"
-            placeholder="Write AI tool used"
-            className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D]"
-          />
-        </div> */}
-
         <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full relative">
           <label
             htmlFor="ai-tool-used"
