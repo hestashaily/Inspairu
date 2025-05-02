@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 const Page: React.FC = () => {
   return (
-    <main>
-      <div className="px-[20px] py-[40px] flex items-start justify-center gap-[66px] lg:flex-row flex-col">
+    <main className="flex w-[100%] items-center justify-center min-h-[100vh] h-[100%]">
+      <div className="flex w-[100%] items-start justify-center gap-[66px] lg:flex-row flex-col">
+
         <Carousel />
-        <div className="lg:max-w-[490px] max-w-full w-full">
+        <div className="max-w-[530px] w-full">
           <h1 className="font-[600] text-[28px] text-[#525252]">Sign In</h1>
           <p className="font-[400] text-[16px] text-[#525252] mt-[8px]">
             Enter your login details to sign in

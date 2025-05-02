@@ -5,8 +5,8 @@ import TextCard from "./TextCard";
 import AudioCard from "./AudioCard";
 import VideoCard from "./VideoCard";
 import RepostPopup from "./RepostPopup";
-import { useRouter } from "next/navigation";
-import { usePost } from "@/app/context/PostContext";
+import { useRouter } from "next/navigation"; 
+
 
 export default function Feed() {
   const [repostData, setRepostData] = useState<any>(null);
@@ -20,14 +20,6 @@ export default function Feed() {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
-  const { setSelectedPost } = usePost();
-  const router = useRouter();
-
-  const handleCardClick = (data: any) => {
-    // setSelectedPost(data);
-    router.push(`/details/${data.postId}`);
-  };
-
   const imageCardsData = [
     {
       postId: "1",
@@ -71,8 +63,15 @@ export default function Feed() {
     videoSrc: "/demovedio.mp4",
     tags: ["#productivity", "#video", "#learn"],
   };
+  const router = useRouter(); 
 
-  
+
+
+  const handleCardClick = (id: string) => {
+    router.push(`/feed/${id}`); 
+    console.log("clickd");
+    
+  };
   return (
     <>
       {imageCardsData.length > 0 ? (
@@ -81,19 +80,26 @@ export default function Feed() {
             key={data.postId}
             data={data}
             handleRepost={handleRepost}
-            onClick={() => handleCardClick(data)}
+            handleCardClick={handleCardClick} 
           />
         ))
       ) : (
         <p>No image posts available.</p>
       )}
-   <TextCard
+
+      <TextCard
         key={textCardData.postId}
-        data={textCardData}
+        postId={textCardData.postId}
+        userName={textCardData.userName}
+        userImage={textCardData.userImage}
+        contentHeading={textCardData.contentHeading}
+        contentDescription={textCardData.contentDescription}
+        contentText={textCardData.contentText}
+        tags={textCardData.tags}
+        prompt={textCardData.prompt}
         handleRepost={handleRepost}
+
       />
-
-
 
       <AudioCard
         postId={audioCardData.postId}

@@ -114,7 +114,7 @@
 //                 <Repostdropdown />
 //                 Repost
 //               </p>
-//               <p className="text-[18px] font-[400] text-[#525252] flex items-center gap-[20px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+//               <p className=class="text-[18px] font-[400] text-[#525252] flex items-center gap-[16px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
 //                 <Report />
 //                 Report
 //               </p>
@@ -369,7 +369,7 @@ export default function AudioCard({
                 <Repostdropdown />
                 Repost
               </p>
-              <p className="text-[18px] font-[400] text-[#525252] flex items-center gap-[20px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+              <p className="text-[18px] font-[400] text-[#525252] flex items-center gap-[16px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
                 <Report />
                 Report
               </p>

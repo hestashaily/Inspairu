@@ -7,7 +7,7 @@ export default function App() {
   const [otp, setOtp] = useState('');
 
   return (
-    <div className="flex lg:justify-center justify-start mt-10">
+    <div className="flex lg:justify-center justify-start mt-[10px]">
       <OtpInput
         value={otp}
         onChange={setOtp}

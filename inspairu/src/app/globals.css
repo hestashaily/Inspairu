@@ -64,6 +64,18 @@ body {
   accent-color: #CD508C;
 
 }
+.gradient-border-wrapper {
+  background: linear-gradient(180deg, #973998 0%, #DB5689 100%);
+  padding: 2px; /* Border thickness */
+  border-radius: 27px; /* Outer border radius */
+  display: inline-block; /* Fit to content or set width */
+}
+
+.gradient-border-content {
+  background-color: white; /* Inner background */
+  border-radius: 20px; 
+
+}
 
 
 
