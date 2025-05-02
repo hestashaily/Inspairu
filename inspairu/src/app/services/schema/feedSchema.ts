@@ -1,33 +1,31 @@
 import { z } from "zod";
 import { feed_media_media_type, feeds_feed_type } from "@prisma/client";
 
-export const feedMediaSchema = z.object({
-  thumbnail: z.string().url("Thumbnail Url Must Be Vailed"),
-  mediaURL: z.string().url("Media URL Is Needed"),
-  mediaTypes: z.enum(Object.values(feed_media_media_type) as [string]),
-});
-
-const BasicFeedSchemas = z.object({
-  caption: z.string().min(1, "Caption is required"),
-  aiTools: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-    })
+export const FeedMediaSchema = z.object({
+  thumbnailUrl: z.string().url("Thumbnail URL must be a valid URL"),
+  mediaUrl: z.string().url("Media URL must be a valid URL"),
+  mediaType: z.enum(
+    Object.values(feed_media_media_type) as [string, ...string[]]
   ),
-  prompt: z.string().default("").optional(),
-  hashtags: z.array(z.string()).default([]),
-  description: z.string().optional().default(""),
-  genratedText: z.string().optional().default(""),
 });
 
-export const CreateFeedModel = BasicFeedSchemas.extend({
+const BaseFeedSchema = z.object({
+  caption: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+  prompt: z.string().nullable().optional(),
+  generatedText: z.string().nullable().optional(),
+  hashtags: z.array(z.string()).optional().default([]),
+  aiTools: z.array(z.number().int().positive()).optional().default([]),
+  media: z.array(FeedMediaSchema).optional().default([]),
+});
+
+export const CreateFeedSchema = BaseFeedSchema.extend({
   feedType: z
     .enum(Object.values(feeds_feed_type) as [string, ...string[]])
     .optional(),
 });
 
-export const UpdateFeedSchema = BasicFeedSchemas;
+export const UpdateFeedSchema = BaseFeedSchema;
 
 export const FeedIdSchema = z.union([
   z.bigint(),
@@ -73,11 +71,10 @@ export const GetSearchedFeedsSchema = z.object({
   offset_count: z.number().int().nonnegative().default(0),
 });
 
+export type CreateFeedInput = z.infer<typeof CreateFeedSchema>;
 export type UpdateFeedInput = z.infer<typeof UpdateFeedSchema>;
 export type ReportFeedInput = z.infer<typeof ReportFeedSchema>;
 export type GetAllFeedsInput = z.infer<typeof GetAllFeedsSchema>;
 export type GetMyFeedsInput = z.infer<typeof GetMyFeedsSchema>;
 export type GetOthersFeedsInput = z.infer<typeof GetOthersFeedsSchema>;
 export type GetSearchedFeedsInput = z.infer<typeof GetSearchedFeedsSchema>;
-
-export type CreateFeedInput = z.infer<typeof CreateFeedModel>;

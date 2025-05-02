@@ -112,7 +112,6 @@ export default function PostCard() {
               </div>
             )}
           </div>
-
           <div className="mt-[22px] flex items-center gap-[9px]">
             <div className="flex gap-[6px] items-center p-[10px] bg-[#F9DFE9] max-w-[80px] w-full rounded-full cursor-pointer">
               <Like />
