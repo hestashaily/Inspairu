@@ -88,7 +88,7 @@ export default function TextCard({
   }, []);
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div className="bg-white mt-[27px] rounded-[10px] md:px-[30px] px-[10px] py-[20px]">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">
@@ -127,22 +127,22 @@ export default function TextCard({
         <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{contentHeading}</p>
         <p className="font-[400] text-[16px] text-[#525252]">{contentDescription}</p>
         <div className="mt-[14px] flex items-center gap-[23px] flex-wrap border border-[#E3E3E3] rounded-[15px] p-[16px]">
-          <p className="font-[400] text-[16px] text-[#525252]">{contentText}</p>
+          <p className="font-[400] md:text-[16px] text-[14px] text-[#525252]">{contentText}</p>
         </div>
       </div>
 
-      <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+      <div className="mt-[14px] flex items-center md:gap-[23px] gap-[10px] flex-wrap mb-[19px]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             ChatGPT
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px]  text-[#525252]">
             DeepL
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px]  text-[#CD508C]">
             #lorem #quote #learn #lorem #quote #learn #lorem #quote #learn
             #lorem #quote #learn...
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px]  text-[#525252]">
             Promt - A witty tweet about productivity, A witty tweet about
             productivity
           </span>

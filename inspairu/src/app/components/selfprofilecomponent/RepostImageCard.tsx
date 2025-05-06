@@ -75,9 +75,9 @@ export default function RepostImageCard({
   }, []);
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
-      <div className="py-[17px] px-[21px] rounded-[10px] mb-[18px] bg-[#F3F3F3]">
-        <p className="font-[500] text-[16px] text-[#525252]">
+    <div className="bg-white mt-[27px] rounded-[10px] md:px-[30px] px-[10px] py-[20px]">
+      <div className="py-[17px] px-[21px] rounded-[10px] md:mb-[18px] mb-[10px] bg-[#F3F3F3]">
+        <p className="font-[500] md:text-[16px] text-[14px] text-[#525252]">
           You reposted this
         </p>
       </div>
@@ -86,10 +86,10 @@ export default function RepostImageCard({
         <div className="flex items-center gap-[12px]">
           <Image src={data.userImage} width={38} height={38} alt="User" />
           <div>
-            <p className="font-[700] text-[16px] text-[#1E293B]">
+            <p className="font-[700] md:text-[16px] text-[14px] text-[#1E293B]">
               {data.userName}
             </p>
-            <p className="font-[400] text-[12px] text-[#475569]">Wade Warren</p>
+            <p className="font-[400] md:text-[12px] text-[10px] text-[#475569]">Wade Warren</p>
           </div>
         </div>
 
@@ -121,24 +121,24 @@ export default function RepostImageCard({
 
       <div onClick={() => handleCardClick(data.postId)}>
         <div className="pt-[10px]">
-          <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">
+          <p className="font-[600] md:text-[18px] text-[16px] text-[#525252] pb-[6px]">
             {data.title}
           </p>
-          <p className="font-[400] text-[16px] text-[#525252]">
+          <p className="font-[400] md:text-[16px] text-[14px] text-[#525252]">
             {data.description}
           </p>
         </div>
-        <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+        <div className="mt-[14px] flex items-center md:gap-[23px] gap-[10px] flex-wrap mb-[19px]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[10px] text-[#525252]">
             ChatGPT
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[10px] text-[#525252]">
             DeepL
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[10px] text-[#CD508C]">
             #lorem #quote #learn
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[10px] text-[#525252]">
             Promt - A witty tweet about productivity
           </span>
         </div>
@@ -148,12 +148,12 @@ export default function RepostImageCard({
             alt="Preview"
             width={100}
             height={100}
-            className="w-full min-h-[382px] h-full rounded-[8px] mt-[19px]"
+            className="w-full md:min-h-[382px] min-h-[200px] h-full rounded-[8px] mt-[19px]"
           />
         </div>
       </div>
 
-      <div className="mt-[22px] flex items-center gap-[9px]">
+      <div className="md:mt-[22px] mt-[10px] flex items-center gap-[9px]">
         <div className="flex gap-[6px] items-center p-[10px] bg-[#F9DFE9] max-w-[80px] w-full rounded-full cursor-pointer">
           <Like />
           <p className="font-[400] text-[14px] text-[#525252]">563</p>
@@ -176,14 +176,14 @@ export default function RepostImageCard({
       {/* Share Popup */}
       {isSharePopupOpen && (
         <div className="fixed inset-0 bg-[#202020B5] flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-xl max-w-[437px] w-full text-center relative">
+          <div className="bg-white rounded-lg p-6 shadow-xl max-w-[437px] w-full text-center relative m-[20px]">
             <button
               onClick={toggleSharePopup}
               className="absolute top-2 cursor-pointer right-2 text-gray-500 hover:text-gray-700 text-xl"
             >
               <Closepopup />
             </button>
-            <h2 className="text-[25px] font-[600] text-[#525252] mb-4">
+            <h2 className="md:text-[25px]  text-[20px] font-[600] text-[#525252] mb-4">
               Share
             </h2>
             <div className="flex items-center justify-center gap-[23px]">
@@ -213,14 +213,14 @@ export default function RepostImageCard({
               </Link>
             </div>
 
-            <div className="flex w-full items-start justify-start flex-col mt-[35px]">
+            <div className="flex w-full items-start justify-start flex-col md:mt-[35px] mt-[10px]">
               <label
                 htmlFor="pageLink"
-                className="font-[500] text-[20px] text-[#525252]"
+                className="font-[500] md:text-[20px] text-[16px] text-[#525252]"
               >
                 Page Link
               </label>
-              <div className="bg-[#F1F1F1] py-[10px] px-[12px] rounded-[9px] mt-[20px] w-full flex items-center justify-between">
+              <div className="bg-[#F1F1F1] py-[10px] px-[12px] rounded-[9px] md:mt-[20px] mt-[10px] w-full flex items-center justify-between">
                 <input
                   id="pageLink"
                   type="text"

@@ -9,11 +9,11 @@ const Page: React.FC = () => {
   return (
     <main className="bg-[#F9F9F9] pb-[80px]">
       <Header />
-      <div className="flex items-center gap-[85px] mt-[18px] ml-[19px]">
+      <div className="flex items-center lg:gap-[85px] gap-[30px] mt-[18px] ml-[19px]">
         <Link href="/home">
           <Backbtn />
         </Link>
-        <p className="font-[600] text-[25px] text-[#525252]">
+        <p className="font-[600] md:text-[25px] text-[20px] text-[#525252]">
           Upload Your Content
         </p>
       </div>

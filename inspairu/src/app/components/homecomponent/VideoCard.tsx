@@ -15,7 +15,7 @@ type VideoCardProps = {
   contentDescription: string;
   videoSrc: string;
   tags: string[];
-  handleRepost: (data: any) => void; // Function passed from Feed to handle repost
+  handleRepost: (data: any) => void; 
 };
 
 export default function VideoCard({
@@ -59,7 +59,7 @@ export default function VideoCard({
     }
   };
 
-  // Close dropdown and share popup when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -75,7 +75,7 @@ export default function VideoCard({
     };
   }, []);
 
-  // Close share popup when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -91,7 +91,6 @@ export default function VideoCard({
     };
   }, []);
 
-  // Handle the repost click
   const handleRepostClick = () => {
     handleRepost({
       postId,
@@ -105,7 +104,7 @@ export default function VideoCard({
   };
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div className="bg-white mt-[27px] rounded-[10px] md:px-[30px] px-[10px] py-[20px]">
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">
           <Image src={userImage} width={38} height={38} alt="user-image" />
@@ -123,7 +122,7 @@ export default function VideoCard({
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-[150px] bg-white shadow-lg rounded-md p-2 z-50">
               <p
-                onClick={handleRepostClick} // Trigger handleRepost here
+                onClick={handleRepostClick} 
                 className="text-[18px] font-[400] text-[#525252] flex items-center gap-[16px] hover:bg-gray-100 px-3 py-2 rounded cursor-pointer"
               >
                 <Repostdropdown />
@@ -143,18 +142,18 @@ export default function VideoCard({
         <p className="font-[600] text-[18px] text-[#525252] pb-[6px]">{contentHeading}</p>
         <p className="font-[400] text-[16px] text-[#525252] mb-[18px]">{contentDescription}</p>
 
-        <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+        <div className="mt-[14px] flex items-center md:gap-[23px] gap-[10px] flex-wrap mb-[19px]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             ChatGPT
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             DeepL
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#CD508C]">
             #lorem #quote #learn #lorem #quote #learn #lorem #quote #learn
             #lorem #quote #learn...
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             Promt - A witty tweet about productivity, A witty tweet about
             productivity
           </span>

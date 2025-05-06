@@ -10,7 +10,7 @@ export default function TwoTabToggle() {
     <div className="w-full max-w-full mt-[24px]">
       <div className="flex gap-[30px] mb-4 border-b border-b-[#D1D1D1]">
         <button
-          className={`w-[112px] font-[500] text-[20px] flex gap-[10px] items-center py-2 text-center rounded-t-lg transition-all duration-300 ${
+          className={`w-[112px] font-[500] md:text-[20px] text-[18px] flex gap-[10px] items-center py-2 text-center rounded-t-lg transition-all duration-300 ${
             activeTab === "tab1"
               ? "bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent border-b-[2px] border-b-[#DB5689]"
               : ""
@@ -22,7 +22,7 @@ export default function TwoTabToggle() {
         </button>
 
         <button
-          className={`w-[131px] flex items-center font-[500] text-[20px] gap-[8px] py-2 text-center rounded-t-lg transition-all duration-300 ${
+          className={`w-[131px] flex items-center font-[500] md:text-[20px] text-[18px] gap-[8px] py-2 text-center rounded-t-lg transition-all duration-300 ${
             activeTab === "tab2"
               ? "bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent border-b-[2px] border-b-[#DB5689]"
               : ""

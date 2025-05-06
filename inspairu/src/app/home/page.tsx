@@ -9,7 +9,7 @@ import TwoTabToggle from "../components/TwoTabToggle";
 
 const Page: React.FC = () => {
 
-  const name = "rajat"
+  
 
   return (
     <main className="bg-[#F9F9F9]">

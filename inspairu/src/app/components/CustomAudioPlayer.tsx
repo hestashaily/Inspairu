@@ -182,7 +182,7 @@ export default function CustomAudioPlayer({ audioSrc }: Props) {
       />
 
       <div className="flex justify-between items-center">
-        <button onClick={togglePlay} className="px-4 py-2">
+        <button onClick={togglePlay} className="md:px-4 px-[6px] py-2">
           {playing ? (
             <Playaudio />
           ) : (
@@ -204,8 +204,10 @@ export default function CustomAudioPlayer({ audioSrc }: Props) {
         onChange={handleSeekChange}
         className="max-w-[725px] w-full custom-slider"
       />
-      <div className="bg-[#CD508C] ml-[27px] rounded-[41px] w-[73px] h-[59px] flex items-center justify-center flex-col">
+      <div className="bg-[#CD508C] md:ml-[27px] ml-[10px] rounded-[41px] md:w-[73px] w-[40px] md:h-[59px] h-[30px] flex items-center justify-center flex-col">
+        <div className="md:block hidden">
         <Audio />
+        </div>
         <span className="text-[10px] font-[400] text-white">
           {formatTime(duration)}
         </span>

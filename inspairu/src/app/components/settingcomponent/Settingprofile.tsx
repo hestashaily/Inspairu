@@ -49,21 +49,21 @@ const Settingprofile: React.FC = () => {
             height={52}
             alt="profile"
           />
-          <p className="font-[600] text-[20px] text-[#525252]">Your Profile</p>
+          <p className="font-[600] md:text-[20px] text-[18px] text-[#525252]">Your Profile</p>
         </div>
         <div className="py-[34px] px-[35px] ">
           <form>
-            <div className="flex items-center gap-[287px]">
-              <p className="font-[500] text-[18px] max-w-[123px] w-full  text-[#525252]">
+            <div className="flex lg:items-center items-start lg:flex-row flex-col lg:gap-[287px] gap-[10px]">
+              <p className="font-[500] md:text-[18px] text-[16px] max-w-[123px] w-full  text-[#525252]">
                 Profile Picture
               </p>
-              <div className="flex items-center gap-[23px]">
+              <div className="flex items-center md:gap-[23px] gap-[10px]">
                 <Image
                   src={profileImage}
                   width={78}
                   height={78}
                   alt="profile"
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover md:w-[60px]  "
                 />
                 <input
                   type="file"
@@ -75,14 +75,14 @@ const Settingprofile: React.FC = () => {
                 <button
                   type="button"
                   onClick={triggerFileInput}
-                  className="btn-gradient cursor-pointer py-[10px] px-[21px] flex gap-[10px] items-center rounded-[33px] font-[400] text-[16px] text-white"
+                  className="btn-gradient cursor-pointer py-[10px] px-[21px] flex gap-[10px] items-center rounded-[33px] font-[400] md:text-[16px] text-[14px] text-white"
                 >
                   Edit <Uploadprofile />
                 </button>
                 <button
                   type="button"
                   onClick={handleDeleteImage}
-                  className="flex items-center cursor-pointer gap-[10px] bg-[#CE1518] rounded-[33px] py-[10px] px-[20px] font-[400] text-[16px] text-white"
+                  className="flex items-center cursor-pointer gap-[10px] bg-[#CE1518] rounded-[33px] py-[10px] px-[20px] font-[400] md:text-[16px] text-[14px] text-white"
                 >
                   Delete
                   <Changeprofile />
@@ -90,8 +90,8 @@ const Settingprofile: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-[287px] mt-[16px]">
-              <p className="font-[500] text-[18px] max-w-[123px] w-full  text-[#525252]">
+            <div className="flex lg:items-center items-start lg:flex-row flex-col lg:gap-[287px] gap-[10px] mt-[16px]">
+              <p className="font-[500] md:text-[18px] text-[16px] max-w-[123px] w-full  text-[#525252]">
                 Full Name
               </p>
               <input
@@ -101,8 +101,8 @@ const Settingprofile: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center gap-[287px] mt-[16px]">
-              <p className="font-[500] text-[18px] max-w-[123px] w-full  text-[#525252]">
+            <div className="flex lg:items-center items-start lg:flex-row flex-col lg:gap-[287px] gap-[10px] mt-[16px]">
+              <p className="font-[500] md:text-[18px] text-[16px] max-w-[123px] w-full  text-[#525252]">
                 User Name
               </p>
               <input
@@ -112,8 +112,8 @@ const Settingprofile: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center gap-[287px] mt-[16px]">
-              <p className="max-w-[123px] w-full font-[500] text-[18px] text-[#525252]">
+            <div className="flex lg:items-center items-start lg:flex-row flex-col lg:gap-[287px] gap-[10px] mt-[16px]">
+              <p className="max-w-[123px] w-full font-[500] md:text-[18px] text-[16px] text-[#525252]">
                 Email ID
               </p>
               <input
@@ -123,8 +123,8 @@ const Settingprofile: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center gap-[287px] mt-[16px]">
-              <p className="max-w-[123px] w-full font-[500] text-[18px] text-[#525252]">
+            <div className="flex lg:items-center items-start lg:flex-row flex-col lg:gap-[287px] gap-[10px] mt-[16px]">
+              <p className="max-w-[123px] w-full font-[500] md:text-[18px] text-[16px] text-[#525252]">
                 Bio
               </p>
               <textarea
@@ -134,30 +134,32 @@ const Settingprofile: React.FC = () => {
             </div>
           </form>
         </div>
+        <div className="border-t border-t-[#DCDCDC] flex items-start">
+          <div className=" px-[26px] py-[21px] flex items-center md:gap-[160px] gap-[101px] ">
+            <div
+              className="flex items-center md:max-w-[267px] max-w-[180px] w-full md:gap-[23px] gap-[12px] cursor-pointer "
+              onClick={() => setShowChangePassword(true)}
+            >
+              <Changepassword />
 
-        <div className="border-t border-t-[#DCDCDC] px-[26px] py-[21px] flex items-center gap-[160px]">
-          <div
-            className="flex items-center gap-[23px] cursor-pointer"
-            onClick={() => setShowChangePassword(true)}
-          >
-            <Changepassword />
-            <p className="font-[600] text-[#525252] text-[20px]">
-              Change Password
-            </p>
+              <p className="font-[600] text-[#525252] md:text-[20px] text-[16px] whitespace-nowrap">
+                Change Password
+              </p>
+            </div>
+            <Blackarrow />
           </div>
-          <Blackarrow />
         </div>
       </div>
-      
-       <ChangePasswordModal
+
+      <ChangePasswordModal
         isOpen={showChangePassword}
         onClose={() => setShowChangePassword(false)}
         onForgotPassword={() => {
           setShowChangePassword(false);
           setShowForgotPopup(true);
         }}
-      /> 
-      
+      />
+
       <ForgotPasswordModal
         isOpen={showForgotPopup}
         onClose={() => setShowForgotPopup(false)}

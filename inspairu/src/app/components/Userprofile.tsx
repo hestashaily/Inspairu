@@ -10,15 +10,16 @@ const Userprofile = () => {
     setfollowing(!following);
   };
   return (
-    <div className="bg-white py-[30px] px-[40px] rounded-[15px]">
+    <div className="bg-white py-[30px] md:px-[40px] px-[10px] rounded-[15px]">
       <div className="w-full">
-        <div className="flex items-center gap-[33px] ">
+        <div className="flex lg:items-center items-start gap-[33px] lg:flex-row flex-col">
           <div className="border-[4px] border-[#973998] rounded-full p-[10px]">
             <Image
               src="/home-images/Avatar.png"
-              width={148}
-              height={148}
+              width={121}
+              height={121}
               alt="repostperson"
+              className="md:w-[121px] w-[90px]"
             />
           </div>
           <div>
@@ -28,7 +29,7 @@ const Userprofile = () => {
             <p className="font-[500] text-[14px] text-[#1E293B]">
               Eleonar Pena{" "}
             </p>
-            <p className="font-[400] text-[#525252] text-[16px] mt-[12px] max-w-[666px] w-full">
+            <p className="font-[400] text-[#525252] md:text-[16px] text-[14px] mt-[12px] max-w-[666px] w-full">
               Aliquam magna Lorem ipsum dolor sit amet consectetur. Aliquam
               magna. Lorem ipsum dolor sit . Aliquam magna Lorem ipsum dolor sit
               amet consectetur.m{" "}
@@ -52,10 +53,10 @@ const Userprofile = () => {
                 {following ? "Following" : "Follow"}
               </button>
               <Link href="/chat">
-              <button className="btn-gradient py-[12px] px-[26px] cursor-pointer rounded-full font-[400] text-[16px] text-[#FFFFFF] flex items-center gap-[12px]">
-                Chat
-                <Chat />
-              </button>
+                <button className="btn-gradient py-[12px] px-[26px] cursor-pointer rounded-full font-[400] text-[16px] text-[#FFFFFF] flex items-center gap-[12px]">
+                  Chat
+                  <Chat />
+                </button>
               </Link>
             </div>
           </div>

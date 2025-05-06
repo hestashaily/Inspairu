@@ -18,7 +18,7 @@ import Repost from "../Repost";
 interface ImageCardProps {
   data: any;
   handleRepost: (data: any) => void;
-  handleCardClick: (id: string) => void; // ✅ Add new prop
+  handleCardClick: (id: string) => void; 
 }
 
 export default function ImageCard({
@@ -74,7 +74,7 @@ export default function ImageCard({
   }, []);
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div className="bg-white mt-[27px] rounded-[10px] md:px-[30px] px-[10px] py-[20px]">
       <Repost />
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">
@@ -119,17 +119,17 @@ export default function ImageCard({
             {data.description}
           </p>
         </div>
-        <div className="mt-[14px] flex items-center gap-[23px] flex-wrap mb-[19px]">
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+        <div className="mt-[14px] flex items-center md:gap-[23px] gap-[10px] flex-wrap mb-[19px]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             ChatGPT
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             DeepL
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#CD508C]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#CD508C]">
             #lorem #quote #learn #lorem #quote #learn #lorem #quote #learn
           </span>
-          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] text-[16px] text-[#525252]">
+          <span className="bg-[#F2F2F2] rounded-[33px] py-[8px] px-[18px] font-[500] md:text-[16px] text-[12px] text-[#525252]">
             Promt - A witty tweet about productivity, A witty tweet about
             productivity
           </span>
@@ -140,7 +140,7 @@ export default function ImageCard({
             alt="Preview"
             width={100}
             height={100}
-            className="w-full min-h-[382px] h-full rounded-[8px] mt-[19px]"
+            className="w-full md:min-h-[382px] min-h-[200px] h-full rounded-[8px] mt-[19px]"
           />
         </div>
         </div>
@@ -165,7 +165,6 @@ export default function ImageCard({
           </div>
         </div>
 
-        {/* Share Popup */}
         {isSharePopupOpen && (
           <div className="fixed inset-0 bg-[#202020B5] flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 shadow-xl max-w-[437px] w-full text-center relative">
@@ -235,7 +234,6 @@ export default function ImageCard({
           </div>
         )}
 
-        {/* Comment Box */}
         {isCommentBoxOpen && (
           <div className="mt-4">
             <CommentBox />

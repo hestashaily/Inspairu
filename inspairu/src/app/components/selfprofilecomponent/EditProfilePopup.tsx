@@ -35,13 +35,15 @@ const EditProfilePopup: React.FC<EditProfilePopupProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-[#202020D6] flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-xl w-[655px]">
-        <button onClick={onClose} className="flex cursor-pointer items-end justify-end w-full">
+      <div className="bg-white md:p-6 p-[10px] rounded-xl w-[655px] m-[20px]">
+        <button
+          onClick={onClose}
+          className="flex cursor-pointer items-end justify-end w-full"
+        >
           <Closepopup />
         </button>
         <div>
-        
-          <h2 className="text-xl text-[#525252] font-bold mb-4 text-center">
+          <h2 className="text-xl text-[#525252] font-bold lg:mb-4 mb-[8px] text-center">
             Edit Profile
           </h2>
           <div className="flex items-center justify-between">
@@ -52,7 +54,7 @@ const EditProfilePopup: React.FC<EditProfilePopupProps> = ({ onClose }) => {
                   width={78}
                   height={78}
                   alt="profile"
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover  lg:w-[78px] w-[50px] lg:h-[78px] h-[50px]"
                 />
 
                 <input
@@ -63,38 +65,41 @@ const EditProfilePopup: React.FC<EditProfilePopupProps> = ({ onClose }) => {
                   style={{ display: "none" }}
                 />
               </div>
-              <div className="flex items-center justify-between max-w-[231px] w-full m-auto pt-[16px] gap-[12px]">
+              <div className="flex items-center justify-between max-w-[231px] w-full m-auto lg:pt-[16px] pt-[10px] gap-[12px]">
                 <button
                   type="button"
                   onClick={triggerFileInput}
-                  className="btn-gradient cursor-pointer py-[10px] px-[21px] flex gap-[10px] items-center rounded-[33px] font-[400] text-[16px] text-white"
+                  className="btn-gradient cursor-pointer py-[10px] px-[21px] flex gap-[10px] items-center rounded-[33px] font-[400] lg:text-[16px] text-[14px] text-white"
                 >
                   Edit <Uploadprofile />
                 </button>
                 <button
                   type="button"
                   onClick={handleDeleteImage}
-                  className="flex items-center cursor-pointer gap-[10px] bg-[#CE1518] rounded-[33px] py-[10px] px-[20px] font-[400] text-[16px] text-white"
+                  className="flex items-center cursor-pointer gap-[10px] bg-[#CE1518] rounded-[33px] py-[10px] px-[20px] font-[400]  lg:text-[16px] text-[14px] text-white"
                 >
                   Delete <Changeprofile />
                 </button>
               </div>
-              <form action="" className="pt-[26px] flex items-center justify-center flex-col">
+              <form
+                action=""
+                className="lg:pt-[26px] pt-[10px] flex items-center justify-center flex-col"
+              >
                 <input
                   type="text"
                   placeholder="Cameron Williamson"
-                  className="py-[10px] w-full outline-none px-[25px] border border-[#E2E8F0] rounded-[6px]"
+                  className="py-[10px] text-[#4B5669]  w-full outline-none px-[25px] border border-[#E2E8F0] rounded-[6px]"
                 />
                 <input
                   type="email"
                   placeholder="debra.holt@example.com"
-                  className="py-[10px] mt-[20px] w-full outline-none px-[25px] border border-[#E2E8F0] rounded-[6px]"
+                  className="py-[10px] text-[#4B5669]  lg:mt-[20px] mt-[10px] w-full outline-none px-[25px] border border-[#E2E8F0] rounded-[6px]"
                 />
                 <textarea
-                  className="w-full mb-[28px] py-[9px] px-[24px] font-[400] text-[14px] text-[#4B5669] min-h-[128px] h-full border border-[#E2E8F0] rounded-[6px] outline-none mt-[24px] resize-none"
+                  className="w-full lg:mb-[28px] mb-[10px] py-[9px] px-[24px] font-[400] text-[14px] text-[#4B5669] md:min-h-[128px] min-h-[80px] h-full border border-[#E2E8F0] rounded-[6px] outline-none lg:mt-[24px] mt-[10px] resize-none"
                   placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco"
                 ></textarea>
-                <button className="py-[14px] cursor-pointer px-[40px] rounded-full btn-gradient font-[500] text-[16px] text-[#FFFFFF]  max-w-[124px] w-full m-auto">
+                <button className="lg:py-[14px] py-[10px] cursor-pointer px-[40px] rounded-full btn-gradient font-[500] text-[16px] text-[#FFFFFF]  max-w-[124px] w-full m-auto">
                   Save
                 </button>
               </form>

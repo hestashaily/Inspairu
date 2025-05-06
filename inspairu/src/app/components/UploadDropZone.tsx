@@ -65,19 +65,19 @@ export default function UploadDropZone() {
   };
 
   return (
-    <div className="flex items-start gap-[40px] flex-wrap mt-[15px] ">
+    <div className="flex items-start gap-[20px] flex-wrap mt-[15px] w-full">
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onClick={handleClick}
-        className="max-w-[500px] bg-[#F9DFE942]  min-h-[550px] h-full w-full  cursor-pointer border-2 border-dashed border-[#CD508C] p-8 rounded-lg text-center hover:border-blue-500 transition-colors"
+        className="xl:max-w-[500px] max-w-full w-full  bg-[#F9DFE942]  md:min-h-[550px] min-h-[400px] h-full   cursor-pointer border-2 border-dashed border-[#CD508C] p-8 rounded-lg text-center hover:border-blue-500 transition-colors"
       >
         <Image
           src="/home-images/upload.png"
           width={100}
           height={100}
           alt="uploadpost"
-          className="max-w-[100px] w-full m-auto pt-[100px]"
+          className="max-w-[100px] w-full m-auto md:pt-[100px] pt-[0px]"
         />
         <p className="font-[600] mt-[25px] text-[18px] text-[#0F0F0F]">
           Drag & drop files or{" "}
@@ -104,7 +104,7 @@ export default function UploadDropZone() {
           className="hidden"
         />
       </div>
-      <div className="flex items-start flex-col max-w-[530px] w-full">
+      <div className="flex items-start flex-col xl:max-w-[530px] max-w-full w-full">
         <div className="flex flex-wrap gap-4 max-w-[600px] mb-4">
           {previews.map((media) => (
             <div
