@@ -6,9 +6,9 @@ import {
 } from "@/app/backend/model/feed.model";
 import { getVerifiedUser } from "@/app/services/utils/fetchVeifiedUser";
 import {
+  callAllFeedServices,
   createFeedService,
 } from "@/app/backend/services/feed.service";
-import { prisma } from "@/lib/prisma";
 
 export async function createFeedAction(formData: unknown) {
   // 1) validate
@@ -30,10 +30,20 @@ export async function createFeedAction(formData: unknown) {
     BigInt(user.user_id)
   );
 }
-
-export async function showAllFeadAction() {
+export async function getAllFeed(limit_count: number, offset_count: number) {
   const user = await getVerifiedUser();
-  if (!user) throw new Error("Not authenticated");
+  if (!user) throw new Error("Not Authenticated");
 
-  return await prisma.feeds.findMany();
+  try {
+    const resp = await callAllFeedServices(
+      BigInt(user.user_id),
+      limit_count,
+      offset_count
+    );
+    console.log("Data returned from service:", resp.data);
+    return resp.data; // Array of feed objects
+  } catch (error) {
+    console.error("Error in fetching feeds", error);
+    return []; // Always return an array on failure
+  }
 }

@@ -15,7 +15,7 @@ export default function SignUpform({
   formData,
 }: signUpformProps) {
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/" });
+    signIn("google", { callbackUrl: "/home" });
   };
   const { data: session, status } = useSession();
 
@@ -47,9 +47,12 @@ export default function SignUpform({
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
+        const errorMessage =
+          data.error || "Something went wrong. Please try again.";
+        console.log("this is error message", errorMessage);
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
       }
-
       toast.success("OTP sent to your email");
       updateFormData({
         firstName,

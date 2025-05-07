@@ -47,7 +47,7 @@ export default function UploadDropZone({
       Hastags: hastage.split(",").map((tag) => tag.trim()),
       Description: description,
     });
-  }, [caption, AITools, pompts, hastage, description]);
+  }, [caption, AITools, pompts, hastage, description,]);
 
   useEffect(() => {
     // Fetch AI tools from the backend
@@ -335,6 +335,11 @@ export default function UploadDropZone({
           </div>
         </div>
       </div>
+      <div className="flex items-end justify-end w-full">
+      <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer  text-white">
+          Post
+        </button>
+        </div>
     </div>
   );
 }

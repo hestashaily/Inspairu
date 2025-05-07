@@ -13,9 +13,8 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    const otp = Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit OTP
-
+    console.log("EMAIL_USER", process.env.SMTP_EMAIL);
+    console.log("EMAIL_PASS", process.env.SMTP_PASSWORD);
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -23,6 +22,7 @@ export async function POST(req: Request) {
         pass: process.env.SMTP_PASSWORD,
       },
     });
+    const otp = Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit OTP
 
     const mailOptions = {
       from: process.env.SMTP_EMAIL,

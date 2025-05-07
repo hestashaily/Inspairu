@@ -192,6 +192,7 @@ export default function Header() {
               // src="/auth-images/profile-avatar.png"
               width={40}
               height={40}
+              className="rounded-full"
               alt="profile"
             />
           </div>

@@ -112,3 +112,29 @@ interface MediaForm {
   Description: string;
   GenratedText: string;
 }
+
+export interface FeedType {
+  feed_id: number;
+  feed_uuid: string;
+  user_id: number;
+  user_uuid: string;
+  username: string;
+  profile_pic: string | null;
+  name: string;
+  caption?: string;
+  description: string;
+  text?: string | null ;
+  generated_text?: string | null;
+  feed_type: string;
+  prompt?: string | null;
+  ai_tools: string[];
+  hashtags: string[];
+  media?: string | null;
+  is_deleted: boolean;
+  is_reacted: boolean;
+  total_comments_count: number;
+  total_likes_count: number;
+  total_views_count: number;
+  created_at: Date;
+  updated_at: Date;
+}

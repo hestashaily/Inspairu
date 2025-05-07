@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Heart,  Following, Heartfilled } from "../icon"; 
+import { Heart, Following, Heartfilled } from "../icon";
 import CreatePost from "./CreatePost";
 
 export default function TwoTabToggle() {
@@ -13,11 +13,11 @@ export default function TwoTabToggle() {
           className={`w-[112px] font-[500] text-[20px] flex gap-[10px] items-center py-2 text-center rounded-t-lg transition-all duration-300 ${
             activeTab === "tab1"
               ? "bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent border-b-[2px] border-b-[#DB5689]"
-              : ""
+              : " text-black"
           }`}
           onClick={() => setActiveTab("tab1")}
         >
-          {activeTab === "tab1" ?   <Heart /> : <Heartfilled/>}
+          {activeTab === "tab1" ? <Heart /> : <Heartfilled />}
           For you
         </button>
 
@@ -25,11 +25,11 @@ export default function TwoTabToggle() {
           className={`w-[131px] flex items-center font-[500] text-[20px] gap-[8px] py-2 text-center rounded-t-lg transition-all duration-300 ${
             activeTab === "tab2"
               ? "bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent border-b-[2px] border-b-[#DB5689]"
-              : ""
+              : "text-black"
           }`}
           onClick={() => setActiveTab("tab2")}
         >
-          {activeTab === "tab2" ? <Heart />: <Following />}
+          {activeTab === "tab2" ? <Heart /> : <Following />}
           Following
         </button>
       </div>
@@ -37,11 +37,11 @@ export default function TwoTabToggle() {
       <div className="">
         {activeTab === "tab1" ? (
           <div>
-            <CreatePost/>
+            <CreatePost />
           </div>
         ) : (
           <div>
-             <CreatePost/>
+            <CreatePost />
           </div>
         )}
       </div>

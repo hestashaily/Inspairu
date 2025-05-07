@@ -195,6 +195,11 @@ export default function TextPost({
           className="noresize border border-[#CBD5E1] rounded-[14px] w-full min-h-[252px] h-full resize-none outline-none p-[8px] font-[500] text-[14px] text-[#8D8D8D]"
         ></textarea>
       </div>
+      <div className="flex items-end justify-end w-full mt-[15px]">
+      <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer  text-white">
+          Post
+        </button>
+        </div>
     </div>
   );
 }

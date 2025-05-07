@@ -15,7 +15,7 @@ const BasicFeedSchemas = z.object({
       name: z.string(),
     })
   ),
-  prompt: z.string().default("").optional(),
+  prompts: z.string().default("").optional(),
   hashtags: z.array(z.string()).default([]),
   description: z.string().optional().default(""),
   genratedText: z.string().optional().default(""),

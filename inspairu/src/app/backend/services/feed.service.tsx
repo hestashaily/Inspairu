@@ -1,6 +1,8 @@
 import { PrismaClient, feeds_feed_type } from "@prisma/client";
 import { CreateFeedModel } from "../model/feed.model";
 import { z } from "zod";
+import pool from "@/lib/db";
+import { RowDataPacket } from "mysql2";
 
 const prisma = new PrismaClient();
 
@@ -8,21 +10,19 @@ export const createFeedService = async (
   input: z.infer<typeof CreateFeedModel>,
   userId: bigint
 ) => {
-  const { caption, description, prompt, feedType, aiTools, hashtags } = input;
-  console.log("thia is hastage value", hashtags);
+  const { caption, description, prompts, feedType, aiTools, hashtags } = input;
+  console.log("thia is prompt value", prompts);
   return await prisma.$transaction(async (tx) => {
     const feed = await tx.feeds.create({
       data: {
         user_id: userId,
         caption,
         description,
-        prompt,
+        prompt:prompts,
         feed_type: feedType as feeds_feed_type | undefined,
         feed_uuid: crypto.randomUUID(),
       },
     });
-
-    // Handle AI Tools
     if (aiTools && aiTools.length > 0) {
       await tx.feed_ai_tool.createMany({
         data: aiTools.map((tool) => ({
@@ -31,8 +31,6 @@ export const createFeedService = async (
         })),
       });
     }
-
-    // Handle Hashtags
     if (hashtags && Array.isArray(hashtags)) {
       const parsedHashtags = hashtags
         .flatMap((tagStr) => tagStr.split(/[\s,]+/))
@@ -49,13 +47,20 @@ export const createFeedService = async (
         });
       }
     }
-
     return feed;
   });
 };
 
-export const callAllFeedServices = async () => {
-  const feeds = await prisma.feeds.findMany();
-  return feeds;
+export const callAllFeedServices = async (
+  p_user_id: bigint,
+  limit_count: number,
+  offset_count: number
+) => {
+  const [rows] = await pool.query<RowDataPacket[][]>(
+    "CALL get_all_feeds(?, ?, ?)",
+    [p_user_id, limit_count, offset_count]
+  );
 
+  // console.log("Full rows from DB:", rows); // rows[0] is the array of feed records
+  return { data: rows[0] };
 };

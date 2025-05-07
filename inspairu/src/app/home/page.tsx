@@ -1,7 +1,9 @@
 "use client";
 
 import Header from "../components/Header";
-import PostCard from "../components/PostCard";
+import Feed from "../components/homecomponent/Feed";
+
+
 import TwoTabToggle from "../components/TwoTabToggle";
 
 const Page: React.FC = () => {
@@ -10,7 +12,7 @@ const Page: React.FC = () => {
       <Header />
       <div className="container">
         <TwoTabToggle />
-        <PostCard />
+        <Feed/>
       </div>
     </main>
   );

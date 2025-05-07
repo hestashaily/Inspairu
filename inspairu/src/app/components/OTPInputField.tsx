@@ -6,7 +6,7 @@ interface OTPInputFieldProps {
 }
 export default function App({ otpValue, setOtpValue }: OTPInputFieldProps) {
   return (
-    <div className="flex lg:justify-center justify-start mt-10">
+    <div className="flex lg:justify-center justify-start mt-[10px]">
       <OtpInput
         value={otpValue}
         onChange={setOtpValue}

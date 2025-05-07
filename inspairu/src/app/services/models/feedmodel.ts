@@ -7,7 +7,7 @@ class FeedService {
     await prisma.$transaction(async (prisma) => {
       const newFeed = await prisma.feeds.create({
         data: {
-          user_id: userID,
+          user_id: userID,   
           caption: data.caption,
           description: data.description,
           prompt: data.prompt,
