@@ -28,7 +28,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
 
   return (
     <>
-    <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg">
+    <div className="bg-white m-[20px]  max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg">
       <button
         onClick={onClose}
         className="absolute top-[10px] cursor-pointer right-[16px] text-[20px] font-bold"
@@ -41,7 +41,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
           <h2 className="text-[20px] font-semibold text-[#333]">
             Reset Password
           </h2>
-          <p className="mb-[30px] text-center text-[#666] text-[14px]">
+          <p className="md:mb-[30px] mb-[10px] text-center text-[#666] text-[14px]">
             Your previous password has been reseted. Please set a new password
             for your account.
           </p>

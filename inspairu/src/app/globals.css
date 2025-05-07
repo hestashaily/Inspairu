@@ -55,9 +55,10 @@ body {
   }
 }
 .container{
-  max-width: 1144px;
+  max-width: 1164px;
   width: 100%;
   margin: auto;
+  padding: 0 20px;
 }
 
 .custom-slider{
@@ -66,16 +67,36 @@ body {
 }
 .gradient-border-wrapper {
   background: linear-gradient(180deg, #973998 0%, #DB5689 100%);
-  padding: 2px; /* Border thickness */
-  border-radius: 27px; /* Outer border radius */
-  display: inline-block; /* Fit to content or set width */
+  padding: 2px; 
+  border-radius: 27px; 
+  display: inline-block; 
 }
 
 .gradient-border-content {
-  background-color: white; /* Inner background */
+  background-color: white;
   border-radius: 20px; 
 
 }
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  padding: 10px;
+
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #973998;
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #DB5689;
+}
+
 
 
 

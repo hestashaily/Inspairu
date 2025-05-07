@@ -17,7 +17,7 @@ export default function UserProfile() {
             <Backbtn />
           </Link>
         </div>
-        <div className="bg-white rounded-[10px] border border-[#ECF0F5] m-[16px] flex items-start">
+        <div className="bg-white rounded-[10px] border border-[#ECF0F5] m-[16px] flex items-start lg:flex-row flex-col">
           <Messages />
           <Chatbox/>
         </div>

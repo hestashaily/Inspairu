@@ -100,7 +100,7 @@ export default function TextCard({
   }, []);
 
   return (
-    <div className="bg-white mt-[27px] rounded-[10px] px-[30px] py-[20px]">
+    <div className="bg-white mt-[27px] rounded-[10px] md:px-[30px] px-[10px] py-[20px]">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-b-[#C8CBD9] pb-[14px]">
         <div className="flex items-center gap-[12px]">

@@ -24,7 +24,7 @@ export const ChangePasswordModal: React.FC<{
   return (
     <>
       <div className="fixed inset-0 bg-[#202020D6] z-50 flex justify-center items-center">
-        <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg">
+        <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg m-[20px]">
           <button
             onClick={onClose}
             className="absolute top-[10px] cursor-pointer right-[16px] text-[20px] font-bold"
@@ -33,7 +33,7 @@ export const ChangePasswordModal: React.FC<{
           </button>
           <div className="flex items-center justify-center flex-col">
             <Setpass />
-            <h2 className="text-[20px] font-semibold text-[#333] mt-[30px]">
+            <h2 className="text-[20px] font-semibold text-[#333] md:mt-[30px] mt-[10px]">
               Change Password
             </h2>
             <p className="mb-[30px]">
@@ -107,7 +107,7 @@ export const ChangePasswordModal: React.FC<{
             </span>
             <button
               type="submit"
-              className="bg-[#525252] cursor-pointer btn-gradient text-white rounded-[6px] py-[10px] mt-[10px]"
+              className="bg-[#525252] cursor-pointer btn-gradient text-white rounded-[6px] py-[10px]"
             >
               Change Password
             </button>

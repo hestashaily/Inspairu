@@ -59,7 +59,7 @@ export default function UploadContent() {
   const [activeTab, setActiveTab] = useState("tab1");
 
   return (
-    <div className="w-full max-w-full mt-[24px] bg-white py-[18px] px-[32px] rounded-[12px] border border-[#ECF0F5]">
+    <div className="w-full max-w-full mt-[24px] bg-white py-[18px] md:px-[32px] px-[12px] rounded-[12px] border border-[#ECF0F5]">
       {/* Tabs */}
       <div className="flex space-x-2 justify-between w-full border-b border-b-[#D1D1D1]">
         <div className="flex items-center space-x-2">

@@ -15,8 +15,7 @@ export default function Setting() {
           <Link href="/user-profile">
             <Backbtn />
           </Link>
-          <p className="font-[600] text-[25px] text-[#525252]">Settings</p>
-
+          <p className="font-[600] md:text-[25px] text-[20px] text-[#525252]">Settings</p>
         </div>
         <div>
             <Settingprofile/>

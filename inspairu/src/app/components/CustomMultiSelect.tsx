@@ -49,7 +49,7 @@ export default function CustomMultiSelect({
       className="flex flex-col gap-[10px] relative w-full"
       ref={dropdownRef}
     >
-      <label className="font-[600] text-[18px] text-[#525252]">{label}*</label>
+      <label className="font-[600] md:text-[18px] text-[16px] text-[#525252]">{label}*</label>
       <div
         onClick={() => setIsOpen((prev) => !prev)}
         className="border border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-[500] text-[14px] text-[#8D8D8D] cursor-pointer relative"

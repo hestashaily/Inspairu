@@ -24,7 +24,7 @@ export const ForgotPasswordModal: React.FC<{
   return (
     <div className="fixed inset-0 bg-[#202020D6] z-50 flex justify-center items-center">
       {step === "email" ? (
-        <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg">
+        <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg  m-[20px]">
           <button
             onClick={onClose}
             className="absolute top-[10px] cursor-pointer right-[16px] text-[20px] font-bold"

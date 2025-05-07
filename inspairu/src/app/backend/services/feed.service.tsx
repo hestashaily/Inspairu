@@ -60,7 +60,6 @@ export const callAllFeedServices = async (
     "CALL get_all_feeds(?, ?, ?)",
     [p_user_id, limit_count, offset_count]
   );
-
   // console.log("Full rows from DB:", rows); // rows[0] is the array of feed records
   return { data: rows[0] };
 };
