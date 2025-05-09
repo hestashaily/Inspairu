@@ -12,7 +12,7 @@ const Page: React.FC = () => {
   
 
   return (
-    <main className="bg-[#F9F9F9]">
+    <main className="bg-[#F9F9F9] ">
       <Header />
       <div className="container">
         <TwoTabToggle />

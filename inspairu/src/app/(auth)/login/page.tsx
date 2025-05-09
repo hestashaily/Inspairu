@@ -40,14 +40,14 @@ const Page: React.FC = () => {
                   Remember me
                 </p>
               </div>
-              <Link href="#!">
+              <Link href="/forget-pass">
               <p className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent font-[400] text-[16px]">Forgot Password?</p>
               </Link>
             </div>
             <button className="btn-gradient mt-[60px] max-w-full w-full py-[8px] rounded-[6px] font-[600] text-[16px] text-white cursor-pointer">
             Sign In
             </button>
-            <p className=" mt-[24px] font-[400] text-[16px] text-[#344054]">Don’t have an account yet? <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent font-[600] cursor-pointer">Sign up</span></p>
+            <p className=" mt-[24px] font-[400] text-[16px] text-[#344054]">Don’t have an account yet? <Link href="/sign-up"> <span className="bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent font-[600] cursor-pointer">Sign up</span> </Link></p>
           </form>
           <div className="mt-[30px]">
             <p className="font-[500] text-[14px] text-[#A1A1A1] text-center">- OR - </p>

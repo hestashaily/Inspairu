@@ -1,5 +1,6 @@
 import Carousel from "@/app/components/Carousel";
 import Image from "next/image";
+import Link from "next/link";
 const Page: React.FC = () => {
   return (
     <main>
@@ -37,7 +38,7 @@ const Page: React.FC = () => {
             <button className="btn-gradient mt-[118px] max-w-full w-full py-[8px] rounded-[6px] font-[600] text-[16px] text-white cursor-pointer">
             Create Account
             </button>
-            <p className="font-[400] text-[16px] text-[#525252] mt-[25px] text-center">Already have an account? <span className="font-[600] cursor-pointer bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">Login</span></p>
+            <p className="font-[400] text-[16px] text-[#525252] mt-[25px] text-center">Already have an account? <Link href="/login"> <span className="font-[600] cursor-pointer bg-gradient-to-b from-[#973998] to-[#DB5689] bg-clip-text text-transparent">Login</span> </Link></p>
           </form>
           <p className="mt-[37px] text-center font-[500] text-[14px] text-[#A1A1A1]">- OR - </p>
          <div className="flex items-center justify-center gap-[14px] mt-[39px]">
