@@ -1,4 +1,4 @@
-import { Closepopup, Successpasschange } from "@/app/icon";
+import { Closepopup, Successpasschange } from "../../icon/route";
 import React from "react";
 
 interface SuccessModalProps {
@@ -9,7 +9,6 @@ interface SuccessModalProps {
 
 const SuccessModal: React.FC<SuccessModalProps> = ({
   isOpen,
-  message,
   onClose,
 }) => {
   if (!isOpen) return null;

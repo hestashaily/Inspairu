@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Chat, Comment } from "../icon";
+import { Chat } from "../icon/route";
 import Image from "next/image";
 import Link from "next/link";
 

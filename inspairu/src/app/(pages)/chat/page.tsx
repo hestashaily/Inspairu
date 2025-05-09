@@ -1,11 +1,11 @@
 "use client";
 
 import Header from "@/app/components/Header";
-import { Backbtn } from "@/app/icon";
+import { Backbtn } from "../../icon/route";
 import Link from "next/link";
 
-import Messages from "../components/chatcomponent/Messages";
-import Chatbox from "../components/chatcomponent/Chatbox";
+import Messages from "../../components/chatcomponent/Messages";
+import Chatbox from "../../components/chatcomponent/Chatbox";
 
 export default function UserProfile() {
   return (

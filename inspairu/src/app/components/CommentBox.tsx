@@ -1,19 +1,12 @@
 "use client";
-import { useState } from "react";
+// import { useState } from "react";
 import Image from "next/image";
-import { Commented } from "../icon";
+import { Commented } from "../icon/route";
 
 export default function CommentBox() {
-  const [comment, setComment] = useState("");
+  // const [comment, setComment] = useState("");
 
-  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(event.target.value);
-  };
 
-  const handleSubmitComment = () => {
-    console.log("Submitted comment:", comment);
-    setComment("");
-  };
 
   return (
     <div>

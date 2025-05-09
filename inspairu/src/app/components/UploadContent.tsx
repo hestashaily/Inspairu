@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ImageVedio, ImageVedioFilled, Text, TextFilled } from "../icon";
+import { ImageVedio, ImageVedioFilled, Text, TextFilled } from "../icon/route";
 import TextPost from "./TextPost";
 import UploadDropZone from "./UploadDropZone";
 

@@ -4,7 +4,7 @@ import ImageCard from "@/app/components/homecomponent/ImageCard";
 import RepostPopup from "@/app/components/homecomponent/RepostPopup";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
-import { Backbtn } from "@/app/icon";
+import { Backbtn } from "../../icon/route";
 import Link from "next/link";
 
 export default function ID() {
@@ -68,3 +68,4 @@ export default function ID() {
     </>
   );
 }
+

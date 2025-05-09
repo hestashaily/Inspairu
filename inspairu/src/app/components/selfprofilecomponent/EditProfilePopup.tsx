@@ -1,6 +1,6 @@
 import React, { useRef, useState, ChangeEvent } from "react";
 import Image from "next/image";
-import { Changeprofile, Closepopup, Uploadprofile } from "@/app/icon";
+import { Changeprofile, Closepopup, Uploadprofile } from "../../icon/route";
 
 interface EditProfilePopupProps {
   onClose: () => void;

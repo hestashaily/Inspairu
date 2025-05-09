@@ -1,5 +1,5 @@
 
-import { Closepopup, Setpass } from "@/app/icon";
+import { Closepopup, Setpass } from "../../icon/route";
 import Image from "next/image";
 import React, { useState } from "react";
 import SuccessModal from "./SuccessModal"; 

@@ -10,7 +10,7 @@ import {
   Logout,
   Closepopup,
   LogoutIcon,
-} from "../icon";
+} from "../icon/route";
 import Link from "next/link";
 
 export default function Header() {

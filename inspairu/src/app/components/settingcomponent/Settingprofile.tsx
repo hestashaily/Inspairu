@@ -6,7 +6,7 @@ import {
   Changepassword,
   Changeprofile,
   Uploadprofile,
-} from "@/app/icon";
+} from "../../icon/route";
 import { ChangePasswordModal } from "./ChangePasswordModal";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
 

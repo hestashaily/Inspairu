@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useCallback, useState } from "react";
-import { Upload } from "../icon";
+import { Upload } from "../icon/route";
 import Image from "next/image";
 import CustomMultiSelect from "./CustomMultiSelect";
 
@@ -12,13 +13,18 @@ type MediaPreview = {
 };
 
 export default function UploadDropZone() {
-
   const [aiTools, setAiTools] = useState<string[]>([]);
 
   const aiOptions = [
-    'ChatGPT', 'Bard', 'GitHub Copilot', 'Midjourney', 'DALL·E', 'Claude', 'Gemini',
+    "ChatGPT",
+    "Bard",
+    "GitHub Copilot",
+    "Midjourney",
+    "DALL·E",
+    "Claude",
+    "Gemini",
   ];
-  
+
   const [previews, setPreviews] = useState<MediaPreview[]>([]);
 
   const handleFiles = (files: FileList | null) => {
@@ -70,7 +76,7 @@ export default function UploadDropZone() {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onClick={handleClick}
-        className="xl:max-w-[500px] max-w-full w-full  bg-[#F9DFE942]  md:min-h-[550px] min-h-[400px] h-full   cursor-pointer border-2 border-dashed border-[#CD508C] p-8 rounded-lg text-center hover:border-blue-500 transition-colors"
+        className="xl:max-w-[500px] max-w-full w-full bg-[#F9DFE942] md:min-h-[550px] min-h-[400px] h-full cursor-pointer border-2 border-dashed border-[#CD508C] p-8 rounded-lg text-center hover:border-blue-500 transition-colors"
       >
         <Image
           src="/home-images/upload.png"
@@ -91,7 +97,7 @@ export default function UploadDropZone() {
         <p className="font-[400] text-[14px] text-[#676767] mt-[12px]">
           Upload upto 5MB
         </p>
-        <button className="btn-gradient  mt-[47px] font-[400] text-[16px] text-[#FFFFFF] cursor-pointer flex  items-center justify-center gap-[8px] py-[13px] px-[27px] rounded-full max-w-[163px] w-full m-auto">
+        <button className="btn-gradient mt-[47px] font-[400] text-[16px] text-[#FFFFFF] cursor-pointer flex items-center justify-center gap-[8px] py-[13px] px-[27px] rounded-full max-w-[163px] w-full m-auto">
           Select File
           <Upload />
         </button>
@@ -120,10 +126,12 @@ export default function UploadDropZone() {
               </button>
 
               {media.type === "image" && (
-                <img
+                <Image
                   src={media.url}
                   alt="Preview"
-                  className="w-full h-full object-cover rounded"
+                  layout="fill" // Ensures the image covers the container
+                  objectFit="cover" // Maintains aspect ratio
+                  className="w-full h-full rounded"
                 />
               )}
 
@@ -142,7 +150,7 @@ export default function UploadDropZone() {
           ))}
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex flex-col gap-[10px] w-full  max-w-full">
+          <div className="flex flex-col gap-[10px] w-full max-w-full">
             <label
               htmlFor="Caption"
               className="font-semibold block text-[16px] text-[#525252]"
@@ -156,7 +164,7 @@ export default function UploadDropZone() {
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
           </div>
-          <div className="flex flex-col gap-[10px] w-full mt-[15px]  max-w-full">
+          <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full">
             <label
               htmlFor="AI Tool Used"
               className="font-semibold block text-[16px] text-[#525252]"
@@ -170,28 +178,28 @@ export default function UploadDropZone() {
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
           </div>
-          <div className="flex flex-col gap-[10px] w-full mt-[15px]  max-w-full">
+          <div className="flex flex-col gap-[10px] w-full mt-[15px] max-w-full">
             <label
-              htmlFor="AI Tool Used"
+              htmlFor="Promts"
               className="font-semibold block text-[16px] text-[#525252]"
             >
-              Promts
+              Prompts
             </label>
             <input
               type="text"
               name="Promts"
-              placeholder="Write your promts"
+              placeholder="Write your prompts"
               className="border outline-none border-[#CBD5E1] rounded-full py-[8px] px-[12px] font-medium text-[14px] text-[#8D8D8D]"
             />
           </div>
-        <div className="mt-[15px]">
-               <CustomMultiSelect
-                  label="Hashtags"
-                  options={aiOptions}
-                  selectedOptions={aiTools}
-                  setSelectedOptions={setAiTools}
-                />
-                </div>
+          <div className="mt-[15px]">
+            <CustomMultiSelect
+              label="Hashtags"
+              options={aiOptions}
+              selectedOptions={aiTools}
+              setSelectedOptions={setAiTools}
+            />
+          </div>
           <div className="flex items-start flex-col gap-[22px] mt-[15px]">
             <label
               htmlFor="description"
@@ -208,10 +216,10 @@ export default function UploadDropZone() {
         </div>
       </div>
       <div className="flex items-end justify-end w-full">
-      <button className="py-[12px] px-[27px]  rounded-full btn-gradient font-[500] text-[16px] cursor-pointer  text-white">
+        <button className="py-[12px] px-[27px] rounded-full btn-gradient font-[500] text-[16px] cursor-pointer text-white">
           Post
         </button>
-        </div>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import Header from "@/app/components/Header";
-import { Backbtn } from "@/app/icon";
+import { Backbtn } from "../../icon/route";
 import Link from "next/link";
-import Settingprofile from "../components/settingcomponent/Settingprofile";
+import Settingprofile from "../../components/settingcomponent/Settingprofile";
 
 
 export default function Setting() {

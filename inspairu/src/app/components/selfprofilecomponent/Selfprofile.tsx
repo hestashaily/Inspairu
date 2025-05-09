@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Closepopup, EditProfileIcon } from "@/app/icon";
+import { Closepopup, EditProfileIcon } from "../../icon/route";
 import EditProfilePopup from "./EditProfilePopup";
 
 const Selfprofile = () => {

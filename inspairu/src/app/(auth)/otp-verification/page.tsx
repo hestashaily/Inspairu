@@ -1,6 +1,6 @@
 import Carousel from "@/app/components/Carousel";
 import OTPInputField from "@/app/components/OTPInputField";
-import Image from "next/image";
+
 const Page: React.FC = () => {
   return (
     <main className="px-[40px]">

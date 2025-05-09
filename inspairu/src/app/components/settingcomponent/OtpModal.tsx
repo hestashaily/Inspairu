@@ -1,5 +1,6 @@
 
-import { Closepopup, Forget } from "@/app/icon";
+
+import { Closepopup, Forget } from "../../icon/route";
 import React from "react";
 import OTPInputField from "../OTPInputField";
 
@@ -10,6 +11,9 @@ interface OtpModalProps {
 }
 
 const OtpModal: React.FC<OtpModalProps> = ({ isOpen, onClose, onVerify }) => {
+  // Render the modal only if isOpen is true
+  if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 bg-[#202020D6] z-50 flex justify-center items-center ">
       <div className="bg-white max-w-[793px] w-full rounded-[12px] p-[32px] relative shadow-lg text-center m-[20px]">
@@ -42,3 +46,4 @@ const OtpModal: React.FC<OtpModalProps> = ({ isOpen, onClose, onVerify }) => {
 };
 
 export default OtpModal;
+

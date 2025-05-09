@@ -3,7 +3,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Next, Playbtn } from "../icon";
+import { Next, Playbtn } from "../icon/route";
 
 type CustomVideoPlayerProps = {
   videoSrc: string;

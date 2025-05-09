@@ -1,10 +1,10 @@
 "use client";
 
-import Header from "../components/Header";
-import Feed from "../components/homecomponent/Feed";
+import Header from "../../components/Header";
+import Feed from "../../components/homecomponent/Feed";
 
 
-import TwoTabToggle from "../components/TwoTabToggle";
+import TwoTabToggle from "../../components/TwoTabToggle";
 
 
 const Page: React.FC = () => {

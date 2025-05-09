@@ -1,5 +1,5 @@
 
-import { Closepopup, Forget } from "@/app/icon";
+import { Closepopup, Forget } from "../../icon/route";
 import React, { useState } from "react";
 import OtpModal from "./OtpModal";
 import ResetPasswordModal from "./ResetPasswordModal";

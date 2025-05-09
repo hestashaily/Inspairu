@@ -1,9 +1,9 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import Header from "../components/Header";
-import { Backbtn } from "../icon";
+
+import Header from "../../components/Header";
+import { Backbtn } from "../../icon/route";
 import Link from "next/link";
-import UploadContent from "../components/UploadContent";
+import UploadContent from "../../components/UploadContent";
 
 const Page: React.FC = () => {
   return (
